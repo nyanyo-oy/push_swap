@@ -47,27 +47,44 @@ int	add_to_tail (Stack *stack, int num)
 	return (0);
 }//safetyなし
 
+
+bool	is_stack_empty(Stack *stack)
+{
+	return (!stack || !stack->head);//stackが空の場合、headがNULLの場合
+}
+
 int	stack_head_to_head(Stack *dst, Stack *src)//push
 {
-	if (!src)
+	if (is_stack_empty(src))
 		return (-1);
 
 	struct Node *new;
-	new = (struct Node  *)malloc(sizeof(struct Node));
+	struct Node	*old_node;
+	new = (struct Node *)malloc(sizeof(struct Node));
 	if (!new)
-		return (-1);
-		new->number = src->head->number;
+		return(-1);
+	
+	new->number = src->head->number;
 
-	src->head = src->head->next;//nextがNULLの場合NULLにちゃんとなる
-	src->head->prev = NULL;
-	src->tail = src->head;//headがNULLになるとここもNULLになる
-
+	old_node = src->head;
+	src->head = src->head->next;
+	
+	if (src->head)
+		src->head->prev = NULL;
+	else
+		src->tail = NULL;//stuckが空
+	
+	free(old_node);
+	
 	new->next = dst->head;
-	dst->head->prev = new;
-	dst->head = new;
 	new->prev = NULL;
-	if (dst->head->next == NULL)
+	
+	if (dst->head)
+		dst->head->prev = new;
+	else
 		dst->tail = new;
+	
+	dst->head = new;
 
 	return (0);
 }//safety要確認
@@ -168,6 +185,18 @@ void push_swap(PushSwap *ps, int elements)
 
 
 #include <stdio.h>
+void	debug_print_stack_a(PushSwap *ps)		
+{
+	struct Node *c = ps.stack_a.head;
+	
+	printf("\n");
+	while (c != NULL)
+	{
+		printf("%d ",c->number);
+		c = c->next;
+	}
+}
+
 #include <stdlib.h>
 int	main (int arc, char **arv)
 {
@@ -180,15 +209,23 @@ int	main (int arc, char **arv)
 	
 	if (arc >= 2)
 	{
-		i = 0;
+		i = 1;
 		while (arv[i])
 		{
 			add_to_tail(&ps.stack_a, ft_atoi(arv[i]));
 			i++;
 		}
 		push_swap(&ps, arc - 1);
+		
+		struct Node *c = ps.stack_a.head;
+		printf("\n");
+		while (c != NULL)
+		{
+			printf("%d ",c->number);
+			c = c->next;
+		}
 	}
-	write (1, "Error", 5);
+	write (1, "\n", 1);
 	
 	return (0);
 }
