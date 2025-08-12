@@ -1,21 +1,6 @@
+#include "libft-42/libft.h"
 #include "push_swap.h"
 #include <string.h>
-
-typedef struct Node
-{
-	int	number;
-	struct	Node *next;
-	struct	Node *prev;
-} Node;
-
-typedef struct Stack
-{
-	Node	*head;
-	Node	*tail;
-} Stack;
-
-Stack stack_a = {NULL, NULL};
-Stack stack_b = {NULL, NULL};
 
 // Node *add_between (Node *prev, int num, Node *next)
 // {
@@ -50,15 +35,19 @@ int	add_to_tail (Stack *stack, int num)
 	if (stack->head == NULL)
 	{
 		stack->head = current;
+		current->prev = NULL;
 	}
 	else
+	{
 		stack->tail->next = current;
+		current->prev = stack->tail;
+	}
 	stack->tail = current;
 
 	return (0);
-}
+}//safetyなし
 
-int	stack_head_to_head(Stack *dst, Stack *src)
+int	stack_head_to_head(Stack *dst, Stack *src)//push
 {
 	if (!src)
 		return (-1);
@@ -67,24 +56,62 @@ int	stack_head_to_head(Stack *dst, Stack *src)
 	new = (struct Node  *)malloc(sizeof(struct Node));
 	if (!new)
 		return (-1);
-	new->number = src->head->number;
-	src->head = src->head->next;
-	if (src->head->next == NULL)
-		src->tail = src->head;
+		new->number = src->head->number;
+
+	src->head = src->head->next;//nextがNULLの場合NULLにちゃんとなる
+	src->head->prev = NULL;
+	src->tail = src->head;//headがNULLになるとここもNULLになる
 
 	new->next = dst->head;
+	dst->head->prev = new;
 	dst->head = new;
+	new->prev = NULL;
 	if (dst->head->next == NULL)
-		dst->tail = dst->head->next;
-	dst->head = new;
+		dst->tail = new;
+
 	return (0);
-}
+}//safety要確認
 
-int move_tail_to_head(Stack *stack)
+
+int move_head_to_tail(Stack *stack)//rotate
 {
+	if (!stack)
+		return (-1);
 
-	stack->tail = NULL;
-}
+	struct Node	*tmp;
+
+	tmp = stack->head;
+	stack->head = tmp->next;
+	tmp->next->prev = NULL;
+
+	tmp->prev = stack->tail;
+	stack->tail->next = tmp;
+	tmp->next = NULL;
+
+	stack->tail = tmp;
+
+	return (0);
+}//stack内要素一つのみのsafety未実装
+
+int move_tail_to_head(Stack *stack)//reverse_rotate
+{
+	if (!stack)
+		return (-1);
+
+	struct Node	*tmp;
+
+	tmp = stack->tail;
+	stack->tail = tmp->prev;
+	tmp->prev->next = NULL;
+
+	tmp->next = stack->head;
+	stack->head->prev = tmp;
+	tmp->prev = NULL;
+
+	stack->head = tmp;
+
+	return (0);
+}//stack内要素stackなしまたは一つのみのsafety未実装
 
 int	swap (Stack *stack)
 {
@@ -98,70 +125,73 @@ int	swap (Stack *stack)
 	stack->head->next->number = tmp;
 
 	return (0);
-}
+}//safety要確認
 
-int sa(void)
+void push_swap(PushSwap *ps, int elements)
 {
-	return (swap(&stack_a));
-}
-
-int sb(void)
-{
-	return (swap(&stack_b));
-}
-
-int ss(void)
-{
-	if (sa() == 0 && sb() == 0)
-		return (0);
-	return (-1);
-}
-
-int	pa(void)
-{
-	return (stack_head_to_head(&stack_a, &stack_b));
-}
-
-int	pb(void)
-{
-	return (stack_head_to_head(&stack_b, &stack_a));
-}
-
-
-void stack_arv(char **arv)
-{
+	int	min;
+	int max;
+	int	range;
 	int	i;
-	Node *current;
-
-	i = 0;
-	while (arv[i])
+	int	shifts;
+	
+	min = search_min(ps);
+	max = search_max(ps);
+	range = max - min;
+	
+	nomalize(ps, min);
+	
+	shifts = 0;
+	while (range--)//桁数
 	{
-		current->number = ft_atoi(arv[i++]);
-		current = current->next;
+		i = 0;
+		while (elements - i)//要素数
+		{
+			if ((ps->stack_a.head->number >> shifts ) & 1)
+			{
+				ra(ps);
+				pb(ps);
+			}
+			else 
+				ra(ps);
+			i++;
+		}
+		while (ps->stack_b.head != NULL)
+		{
+			pa(ps);
+			ra(ps);
+		}
+		shifts++;
 	}
+	de_nomalize(ps, min);
 }
+
 
 #include <stdio.h>
 #include <stdlib.h>
 int	main (int arc, char **arv)
 {
+	PushSwap	ps;
+	ps.stack_a = (Stack){NULL, NULL};
+	ps.stack_b = (Stack){NULL, NULL};
+	ps.operation_count = 0;
+	
 	int i;
-	Node *current;
-
-	if (arc == 4)
+	
+	if (arc >= 2)
 	{
-		stack_arv(arv);
+		i = 0;
+		while (arv[i])
+		{
+			add_to_tail(&ps.stack_a, ft_atoi(arv[i]));
+			i++;
+		}
+		push_swap(&ps, arc - 1);
 	}
-	current = stack_a.head;
-	while (current != stack_a.tail)
-	{
-		printf("%d ", current->number);
-		current = current->next;
-	}
+	write (1, "Error", 5);
+	
+	return (0);
 }
-
-
-
 
 
 
