@@ -11,7 +11,7 @@ int	search_min(PushSwap *ps)
 	
 	min = target->number;
 	target = target->next;
-	while (target->next != NULL)
+	while (target != NULL)
 	{
 		if (min > target->number)
 			min = target->number;
@@ -31,7 +31,7 @@ int	search_max(PushSwap *ps)
 	
 	max = target->number;
 	target = target->next;
-	while (target->next != NULL)
+	while (target != NULL)
 	{
 		if (max < target->number)
 			max = target->number;
@@ -46,7 +46,7 @@ void	nomalize(PushSwap *ps, int min)
 	
 	target = ps->stack_a.head;
 	
-	while (target->next != NULL)
+	while (target != NULL)
 	{
 		target->number -= min;
 		target = target->next;
@@ -59,7 +59,7 @@ void	de_nomalize(PushSwap *ps, int min)
 		
 		target = ps->stack_a.head;
 		
-		while (target->next != NULL)
+		while (target != NULL)
 		{
 			target->number += min;
 			target = target->next;

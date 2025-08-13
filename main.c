@@ -2,26 +2,43 @@
 #include "push_swap.h"
 #include <string.h>
 
-// Node *add_between (Node *prev, int num, Node *next)
+#include <stdio.h>
+void	debug_print_stack_a(PushSwap *ps)		
+{
+	struct Node *c = ps->stack_a.head;
+	
+	write(1, "\n", 1);
+	while (c != NULL)
+	{
+		printf("%d ",c->number);
+		c = c->next;
+	}
+	printf("\n");
+}
+
+// int	add_to_head (Stack *stack, int num)//beta
 // {
 // 	struct Node *current;
 // 	current = (struct Node *)malloc(sizeof(struct Node));
 // 	if (!current)
-// 		return (NULL);
+// 		return (-1);
 
 // 	current->number = num;
-// 	if (prev)
-// 		prev->next = current;
-// 	current->next = next;
+// 	current->prev = NULL;
+// 	if (stack->head == NULL)
+// 	{
+// 		stack->tail = current;
+// 		current->next = NULL;
+// 	}
+// 	else
+// 	{
+// 		stack->tail->next = current;
+// 		current->prev = stack->tail;
+// 	}
+// 	stack->head = current;
 
-// 	if (!prev && !head)
-// 		head = current;
-// 	if (!next)
-// 		tail = current;
-
-// 	return (current);
-// }
-
+// 	return (0);
+// }//safetyなし
 
 int	add_to_tail (Stack *stack, int num)
 {
@@ -144,13 +161,13 @@ int	swap (Stack *stack)
 	return (0);
 }//safety要確認
 
-void push_swap(PushSwap *ps, int elements)
+void radix_lsd(PushSwap *ps, int elements)
 {
 	int	min;
 	int max;
 	int	range;
-	int	i;
 	int	shifts;
+	int	remaining;
 	
 	min = search_min(ps);
 	max = search_max(ps);
@@ -161,69 +178,76 @@ void push_swap(PushSwap *ps, int elements)
 	shifts = 0;
 	while (range--)//桁数
 	{
-		i = 0;
-		while (elements - i)//要素数
+		remaining = elements;
+		while (remaining--)//要素数
 		{
 			if ((ps->stack_a.head->number >> shifts ) & 1)
-			{
-				ra(ps);
 				pb(ps);
-			}
 			else 
 				ra(ps);
-			i++;
 		}
 		while (ps->stack_b.head != NULL)
 		{
 			pa(ps);
-			ra(ps);
 		}
 		shifts++;
 	}
 	de_nomalize(ps, min);
 }
 
-
-#include <stdio.h>
-void	debug_print_stack_a(PushSwap *ps)		
-{
-	struct Node *c = ps.stack_a.head;
-	
-	printf("\n");
-	while (c != NULL)
-	{
-		printf("%d ",c->number);
-		c = c->next;
-	}
-}
-
-#include <stdlib.h>
-int	main (int arc, char **arv)
+void	main_core(char **ptrr)
 {
 	PushSwap	ps;
 	ps.stack_a = (Stack){NULL, NULL};
 	ps.stack_b = (Stack){NULL, NULL};
 	ps.operation_count = 0;
+	int	i;
 	
-	int i;
-	
-	if (arc >= 2)
+	i = 0;
+	while(ptrr[i])
 	{
-		i = 1;
-		while (arv[i])
-		{
-			add_to_tail(&ps.stack_a, ft_atoi(arv[i]));
-			i++;
-		}
-		push_swap(&ps, arc - 1);
-		
-		struct Node *c = ps.stack_a.head;
-		printf("\n");
-		while (c != NULL)
-		{
-			printf("%d ",c->number);
-			c = c->next;
-		}
+		add_to_tail(&ps.stack_a, ft_atoi(ptrr[i]));
+		i++;
+	}
+	radix_lsd(&ps, i);
+	set_(&ps, i);
+	debug_print_stack_a(&ps);
+}
+
+#include <stdlib.h>
+int	main (int arc, char **arv)
+{
+
+	char		**ptrr;
+	// int i;
+	
+	if (arc == 2)
+	{
+		ptrr = split_spht(arv[1]);
+		// i = 0;
+		// while(ptrr[i])
+		// {
+		// 	add_to_tail(&ps.stack_a, ft_atoi(ptrr[i]));
+		// 	i++;
+		// }
+		// i = 0;
+		// while (ptrr[i++])
+		// radix_lsd(&ps, i);
+		// debug_print_stack_a(&ps);
+		main_core(ptrr);
+	}
+	if (arc >= 3)
+	{
+		ptrr = &arv[1];
+		// i = 1;
+		// while (arv[i])
+		// {
+		// 	add_to_tail(&ps.stack_a, ft_atoi(arv[i]));
+		// 	i++;
+		// }
+		// radix_lsd(&ps, arc - 1);
+		// debug_print_stack_a(&ps);
+		main_core(ptrr);
 	}
 	write (1, "\n", 1);
 	
@@ -231,14 +255,3 @@ int	main (int arc, char **arv)
 }
 
 
-
-//while (current != NULL)
-//	{
-//		if (current->num > current->num)
-//			break;
-//		prev = current;
-//		current = current->next;
-//	}
-//
-//	prev->next = current;
-//	current->next = current;

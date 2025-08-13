@@ -56,7 +56,7 @@ void	de_nomalize(PushSwap *ps, int min);
 
 void	print_newline(PushSwap *ps);
 
-void push_swap(PushSwap *ps, int elements);
+void radix_lsd(PushSwap *ps, int elements);
 
 
 
