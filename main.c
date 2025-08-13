@@ -16,7 +16,7 @@ void	debug_print_stack_a(PushSwap *ps)
 	printf("\n");
 }
 
-// int	add_to_head (Stack *stack, int num)//beta
+// int	add_to_head (Stack *stack, int num)//stillbeta
 // {
 // 	struct Node *current;
 // 	current = (struct Node *)malloc(sizeof(struct Node));
@@ -32,8 +32,8 @@ void	debug_print_stack_a(PushSwap *ps)
 // 	}
 // 	else
 // 	{
-// 		stack->tail->next = current;
-// 		current->prev = stack->tail;
+// 		stack->head->prev = current;
+// 		current->next = stack->head;
 // 	}
 // 	stack->head = current;
 
@@ -49,7 +49,7 @@ int	add_to_tail (Stack *stack, int num)
 
 	current->number = num;
 	current->next = NULL;
-	if (stack->head == NULL)
+	if (stack->tail == NULL)
 	{
 		stack->head = current;
 		current->prev = NULL;
@@ -168,6 +168,7 @@ void radix_lsd(PushSwap *ps, int elements)
 	int	range;
 	int	shifts;
 	int	remaining;
+	int	bit_counts;
 	
 	min = search_min(ps);
 	max = search_max(ps);
@@ -175,16 +176,22 @@ void radix_lsd(PushSwap *ps, int elements)
 	
 	nomalize(ps, min);
 	
+	bit_counts = 0;
+	while ((1 << bit_counts) <= range)
+		bit_counts++;
+	printf("max=%d, min=%d, max_value=%d, bit_counts=%d\n", 
+       max, min, max - min, bit_counts);
+	
 	shifts = 0;
-	while (range--)//桁数
+	while (bit_counts--)//桁数
 	{
 		remaining = elements;
 		while (remaining--)//要素数
 		{
 			if ((ps->stack_a.head->number >> shifts ) & 1)
-				pb(ps);
-			else 
 				ra(ps);
+			else 
+				pb(ps);
 		}
 		while (ps->stack_b.head != NULL)
 		{
@@ -192,9 +199,19 @@ void radix_lsd(PushSwap *ps, int elements)
 		}
 		shifts++;
 	}
+
 	de_nomalize(ps, min);
 }
 
+// int	set_reverse(PushSwap *ps, int elements)
+// {
+// 	while(elements--)
+// 	{
+// 		if (!ra(ps))
+// 			return (-1);
+// 	}
+// 	return (0);
+// }
 void	main_core(char **ptrr)
 {
 	PushSwap	ps;
@@ -209,8 +226,10 @@ void	main_core(char **ptrr)
 		add_to_tail(&ps.stack_a, ft_atoi(ptrr[i]));
 		i++;
 	}
+	// printf ("\n%d\n", i);
 	radix_lsd(&ps, i);
-	set_(&ps, i);
+	// debug_print_stack_a(&ps);
+	// set_reverse(&ps, i);
 	debug_print_stack_a(&ps);
 }
 
