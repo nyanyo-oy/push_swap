@@ -1,63 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 11:47:53 by kenakamu          #+#    #+#             */
+/*   Updated: 2025/08/14 12:08:31 by kenakamu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 #include "libft-42/libft.h"
 
-typedef struct	Node
+typedef struct Node
 {
-	int	number;
+	int			number;
 	struct Node	*next;
 	struct Node	*prev;
-} Node;
+}	Node;
 
-typedef struct	Stack
+typedef struct Stack
 {
 	Node	*head;
 	Node	*tail;
-} Stack;
+}	t_Stack;
 
-typedef struct	PushSwap
+typedef struct PushSwap
 {
-	Stack	stack_a;
-	Stack	stack_b;
+	t_Stack	stack_a;
+	t_Stack	stack_b;
 	int		operation_count;
-} PushSwap;
+}	t_PushSwap;
 
-int	add_to_tail (Stack *stack, int num);
+int		add_to_tail(t_Stack *stack, int num);
 
-int	stack_head_to_head(Stack *dst, Stack *src);//push
-int move_tail_to_head(Stack *stack);//reverse_rotate
-int move_head_to_tail(Stack *stack);//rotate
-int	swap (Stack *stack);
+int		stack_head_to_head(t_Stack *dst, t_Stack *src);//push
+int		move_tail_to_head(t_Stack *Stack);//reverse_rotate
+int		move_head_to_tail(t_Stack *Stack);//rotate
+int		swap(t_Stack *stack);
 
+void	print_newline(t_PushSwap *ps);
 
-int sa(PushSwap *ps);
-int sb(PushSwap *ps);
-int ss(PushSwap *ps);
+int		sa(t_PushSwap *ps);
+int		sb(t_PushSwap *ps);
+int		ss(t_PushSwap *ps);
 
-int	pa(PushSwap *ps);
-int	pb(PushSwap *ps);
+int		pa(t_PushSwap *ps);
+int		pb(t_PushSwap *ps);
 
-int ra(PushSwap *ps);
-int rb(PushSwap *ps);
-int rr(PushSwap *ps);
+int		ra(t_PushSwap *ps);
+int		rb(t_PushSwap *ps);
+int		rr(t_PushSwap *ps);
 
-int rra(PushSwap *ps);
-int rrb(PushSwap *ps);
-int rrr(PushSwap *ps);
+int		rra(t_PushSwap *ps);
+int		rrb(t_PushSwap *ps);
+int		rrr(t_PushSwap *ps);
 
+int		search_min(t_PushSwap *ps);
+int		search_max(t_PushSwap *ps);
 
-int	search_min(PushSwap *ps);
-int	search_max(PushSwap *ps);
-
-void	nomalize(PushSwap *ps, int min);
-void	de_nomalize(PushSwap *ps, int min);
-
-void	print_newline(PushSwap *ps);
-
-void radix_lsd(PushSwap *ps, int elements);
+void	nomalize(t_PushSwap *ps, int min);
+void	de_nomalize(t_PushSwap *ps, int min);
 
 
+void	radix_lsd(t_PushSwap *ps);
+
+int		elements_are_one(t_PushSwap *ps);
+int		elements_are_two(t_PushSwap *ps);
+int		elements_are_three(t_PushSwap *ps);
+int		elements_are_four(t_PushSwap *ps);
+int		elements_are_five(t_PushSwap *ps);
 
 // PushSwap *ps stack_arv(char **arv);

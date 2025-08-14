@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ps_actions.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/14 11:47:40 by kenakamu          #+#    #+#             */
+/*   Updated: 2025/08/14 15:33:27 by kenakamu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-int	search_min(PushSwap *ps)
-{	
+int	search_min(t_PushSwap *ps)
+{
 	struct Node	*target;
-	int	min;
-	
+	int			min;
+
 	target = ps->stack_a.head;
 	if (ps->stack_a.head == ps->stack_a.tail)
-		return(target->number);
-	
+		return (target->number);
 	min = target->number;
 	target = target->next;
 	while (target != NULL)
@@ -20,15 +31,14 @@ int	search_min(PushSwap *ps)
 	return (min);
 }
 
-int	search_max(PushSwap *ps)
-{	
+int	search_max(t_PushSwap *ps)
+{
 	struct Node	*target;
-	int	max;
-	
+	int			max;
+
 	target = ps->stack_a.head;
 	if (ps->stack_a.head == ps->stack_a.tail)
-		return(target->number);
-	
+		return (target->number);
 	max = target->number;
 	target = target->next;
 	while (target != NULL)
@@ -40,12 +50,11 @@ int	search_max(PushSwap *ps)
 	return (max);
 }
 
-void	nomalize(PushSwap *ps, int min)
+void	nomalize(t_PushSwap *ps, int min)
 {
 	struct Node	*target;
-	
+
 	target = ps->stack_a.head;
-	
 	while (target != NULL)
 	{
 		target->number -= min;
@@ -53,22 +62,16 @@ void	nomalize(PushSwap *ps, int min)
 	}
 }
 
-void	de_nomalize(PushSwap *ps, int min)
+void	de_nomalize(t_PushSwap *ps, int min)
 {
 	struct Node	*target;
-		
-		target = ps->stack_a.head;
-		
-		while (target != NULL)
-		{
-			target->number += min;
-			target = target->next;
-		}
+
+	target = ps->stack_a.head;
+	while (target != NULL)
+	{
+
+		target->number += min;
+		target = target->next;
+	}
 }
 
-void	print_newline(PushSwap *ps)
-{
-	if (ps->operation_count > 0)
-		write(1, "\n", 1);
-	ps->operation_count++;
-}
