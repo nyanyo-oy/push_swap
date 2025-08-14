@@ -12,10 +12,10 @@
 
 #include "push_swap.h"
 
-int	search_min(t_PushSwap *ps)
+long	search_min(t_PushSwap *ps)
 {
 	struct Node	*target;
-	int			min;
+	long		min;
 
 	target = ps->stack_a.head;
 	if (ps->stack_a.head == ps->stack_a.tail)
@@ -31,10 +31,10 @@ int	search_min(t_PushSwap *ps)
 	return (min);
 }
 
-int	search_max(t_PushSwap *ps)
+long	search_max(t_PushSwap *ps)
 {
 	struct Node	*target;
-	int			max;
+	long		max;
 
 	target = ps->stack_a.head;
 	if (ps->stack_a.head == ps->stack_a.tail)
@@ -50,7 +50,7 @@ int	search_max(t_PushSwap *ps)
 	return (max);
 }
 
-void	nomalize(t_PushSwap *ps, int min)
+void	nomalize(t_PushSwap *ps, long min)
 {
 	struct Node	*target;
 
@@ -62,7 +62,7 @@ void	nomalize(t_PushSwap *ps, int min)
 	}
 }
 
-void	de_nomalize(t_PushSwap *ps, int min)
+void	de_nomalize(t_PushSwap *ps, long min)
 {
 	struct Node	*target;
 

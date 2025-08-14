@@ -37,22 +37,12 @@ int	elements_are_two(t_PushSwap *ps)
 
 int	elements_are_three(t_PushSwap *ps)
 {
-	// int	n;
-	
-	// n = 3;
-	// while (n--)
-	// {
-	// 	if (ps->stack_a.head->number < ps->stack_a.head->next->number)
-	// 		sa(ps);
-	// 	ra(ps);
-	// }
 	let_min_head(ps, 3);
 	if (ps->stack_a.head->next->number > ps->stack_a.tail->number)
 	{
 		sa(ps);
 		ra(ps);
 	}
-		
 	return (0);
 }
 

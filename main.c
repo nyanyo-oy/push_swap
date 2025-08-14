@@ -22,13 +22,13 @@ void	debug_print_stack_a(t_PushSwap *ps)
 	write(1, "\n", 1);
 	while (c != NULL)
 	{
-		printf("%d ",c->number);
+		printf("%ld ",c->number);
 		c = c->next;
 	}
 	printf("\n");
 }
 
-int	add_to_tail(t_Stack *stack, int num)
+int	add_to_tail(t_Stack *stack, long num)
 {
 	struct Node	*current;
 
@@ -138,7 +138,7 @@ int	count_elements(t_PushSwap *ps)
 	return (elements);
 }
 
-void	radix_lsd_core(t_PushSwap *ps, int range)
+void	radix_lsd_core(t_PushSwap *ps, long range)
 {
 	int	elements;
 	int	bit_counts;
@@ -147,7 +147,7 @@ void	radix_lsd_core(t_PushSwap *ps, int range)
 
 	elements = count_elements(ps);
 	bit_counts = 0;
-	while ((1 << bit_counts) <= range)
+	while (bit_counts < 31 && (1 << bit_counts) <= range)
 		bit_counts++;
 	shifts = 0;
 	while (bit_counts--)
@@ -168,45 +168,14 @@ void	radix_lsd_core(t_PushSwap *ps, int range)
 
 void	radix_lsd(t_PushSwap *ps)
 {
-	int	min;
-	int	range;
+	long	min;
+	long		range;
 
-	min = search_min(ps);
-	range = search_max(ps) - min;
+	min = (long)search_min(ps);
+	range = (long)search_max(ps) - min;
 	nomalize(ps, min);
 	radix_lsd_core(ps, range);
-	de_nomalize(ps, min);
-}
-
-int	is_int_num(const char *nptr)
-{
-	int	i;
-	int	sign;
-	long	result;
-
-	i = 0;
-	sign = 1;
-	result = 0;
-	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
-		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
-	{
-		if (nptr[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		result = (result * 10) + (nptr[i] - '0');
-		if (sign == 1 && result > INT_MAX)
-			return (-1);
-		if (sign == -1 && result > (long)-1 * INT_MIN)
-			return (-1);
-		i++;
-	}
-	if (nptr[i] != '\0')
-		return (-1);
-	return (0);
+	// de_nomalize(ps, min);
 }
 
 void	main_core(char **ptrr)
@@ -216,15 +185,16 @@ void	main_core(char **ptrr)
 
 	ps.stack_a = (t_Stack){NULL, NULL};
 	ps.stack_b = (t_Stack){NULL, NULL};
-	ps.operation_count = 0;
+	// ps.operation_count = 0;
 	i = 0;
 	while (ptrr[i])
 	{
 		if (is_int_num(ptrr[i]))
 		{
 			write(STDOUT_FILENO, "Error\n", 6);
+			exit(1);
 		}
-		add_to_tail(&ps.stack_a, ft_atoi(ptrr[i]));
+		add_to_tail(&ps.stack_a, ft_atol(ptrr[i]));
 		i++;
 	}
 	if (i == 1)
@@ -239,7 +209,8 @@ void	main_core(char **ptrr)
 		elements_are_five(&ps);
 	else
 		radix_lsd(&ps);
-}	// debug_print_stack_a(&ps);
+	// debug_print_stack_a(&ps);
+}
 
 
 #include <stdlib.h>

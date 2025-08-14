@@ -21,8 +21,8 @@ int	ra(t_PushSwap *ps)
 {
 	if (do_ra(ps))
 		return (-1);
-	print_newline(ps);
-	write(1, "ra", 2);
+	// print_newline(ps);
+	write(1, "ra\n", 3);
 	return (0);
 }
 
@@ -35,8 +35,8 @@ int	rb(t_PushSwap *ps)
 {
 	if (do_rb(ps))
 		return (-1);
-	print_newline(ps);
-	write(1, "rb", 2);
+	// print_newline(ps);
+	write(1, "rb\n", 3);
 	return (0);
 }
 
@@ -44,7 +44,7 @@ int	rr(t_PushSwap *ps)
 {
 	if (do_ra(ps) || do_rb(ps))
 		return (-1);
-	print_newline(ps);
-	write(1, "rr", 2);
+	// print_newline(ps);
+	write(1, "rr\n", 3);
 	return (0);
 }

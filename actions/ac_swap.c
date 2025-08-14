@@ -21,8 +21,8 @@ int	sa(t_PushSwap *ps)
 {
 	if (do_sa(ps))
 		return (-1);
-	print_newline(ps);
-	write(1, "sa", 2);
+	// print_newline(ps);
+	write(1, "sa\n", 3);
 	return (0);
 }
 
@@ -35,8 +35,8 @@ int	sb(t_PushSwap *ps)
 {
 	if (do_sb(ps))
 		return (-1);
-	print_newline(ps);
-	write(1, "sb", 2);
+	// print_newline(ps);
+	write(1, "sb\n", 3);
 	return (0);
 }
 
@@ -44,7 +44,7 @@ int	ss(t_PushSwap *ps)
 {
 	if (do_sa(ps) || do_sb(ps))
 		return (-1);
-	print_newline(ps);
-	write(1, "ss", 2);
+	// print_newline(ps);
+	write(1, "ss\n", 3);
 	return (0);
 }
