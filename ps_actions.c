@@ -6,13 +6,13 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 11:47:40 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/14 15:33:27 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/08/15 17:40:30 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	search_min(t_PushSwap *ps)
+long long	search_min(t_PushSwap *ps)
 {
 	struct Node	*target;
 	int		min;
@@ -31,7 +31,7 @@ int	search_min(t_PushSwap *ps)
 	return (min);
 }
 
-int	search_max(t_PushSwap *ps)
+long long	search_max(t_PushSwap *ps)
 {
 	struct Node	*target;
 	int		max;
@@ -50,7 +50,7 @@ int	search_max(t_PushSwap *ps)
 	return (max);
 }
 
-void	nomalize(t_PushSwap *ps, int min)
+void	nomalize(t_PushSwap *ps, long long min)
 {
 	struct Node	*target;
 
@@ -62,7 +62,7 @@ void	nomalize(t_PushSwap *ps, int min)
 	}
 }
 
-void	de_nomalize(t_PushSwap *ps, int min)
+void	de_nomalize(t_PushSwap *ps, long long min)
 {
 	struct Node	*target;
 

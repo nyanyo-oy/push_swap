@@ -31,11 +31,11 @@ bool	is_int_num(const char *nptr)
 	return (true);
 }
 
-int	ft_atoi(const char *nptr)
+long long	ft_atoll(const char *nptr)
 {
 	int		i;
 	int		sign;
-	int	result;
+	long long	result;
 
 	i = 0;
 	sign = 1;
@@ -56,5 +56,5 @@ int	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
-	
-	
+
+

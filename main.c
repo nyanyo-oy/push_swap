@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 11:36:14 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/15 16:29:43 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/08/15 17:42:11 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	debug_print_stack_a(t_PushSwap *ps)
 	write(1, "\n", 1);
 	while (c != NULL)
 	{
-		printf("%d ",c->number);
+		printf("%lld ",c->number);
 		c = c->next;
 	}
 	printf("\n");
 }
 
-int	add_to_tail(t_Stack *stack, int num)
+long long	add_to_tail(t_Stack *stack, int num)
 {
 	struct Node	*current;
 
@@ -113,7 +113,7 @@ int	move_tail_to_head(t_Stack *stack)//reverse_rotate
 
 int	swap(t_Stack *stack)
 {
-	int	tmp;
+	long long	tmp;
 
 	if (!stack || !stack->head || !stack->head->next)
 		return (-1);
@@ -123,7 +123,7 @@ int	swap(t_Stack *stack)
 	return (0);
 }//safety要確認
 
-int	count_elements(t_PushSwap *ps)
+long long	count_elements(t_PushSwap *ps)
 {
 	struct Node	*tmp;
 	int			elements;
@@ -138,16 +138,16 @@ int	count_elements(t_PushSwap *ps)
 	return (elements);
 }
 
-void	radix_lsd_core(t_PushSwap *ps, int range)
+void	radix_lsd_core(t_PushSwap *ps, long long range)
 {
 	int	elements;
-	int	bit_counts;
+	long long	bit_counts;
 	int	n;
 	int	shifts;
 
 	elements = count_elements(ps);
 	bit_counts = 0;
-	while (bit_counts < 63 && (1 << bit_counts) <= range)
+	while (bit_counts < 63 && (1LL << bit_counts) <= range)
 		bit_counts++;
 	shifts = 0;
 	while (bit_counts--)//ここほんとうにあってる？？
@@ -168,18 +168,18 @@ void	radix_lsd_core(t_PushSwap *ps, int range)
 
 void	radix_lsd(t_PushSwap *ps)
 {
-	int	min;
-	int	max;
-	int	range;
+	long long	min;
+	long long	max;
+	long long	range;
 
 	min = search_min(ps);
 	max = search_max(ps);
 	range = max - min;
 
 
-	// nomalize(ps, min);
+	nomalize(ps, min);
 	radix_lsd_core(ps, range);
-	// de_nomalize(ps, min);
+	de_nomalize(ps, min);
 }
 
 bool	is_already_sorted(t_PushSwap *ps)
@@ -196,7 +196,7 @@ bool	is_already_sorted(t_PushSwap *ps)
 	return (tmp == NULL);
 }
 
-bool	has_duplicate(t_PushSwap *ps, int num)
+bool	has_duplicate(t_PushSwap *ps, long long num)
 {
 	struct Node* target;
 
@@ -217,7 +217,7 @@ void	main_core(char **ptrr)
 {
 	t_PushSwap	ps;
 	int			i;
-	int	num;
+	long long	num;
 
 	ps.stack_a = (t_Stack){NULL, NULL};
 	ps.stack_b = (t_Stack){NULL, NULL};
