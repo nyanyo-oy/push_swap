@@ -182,36 +182,6 @@ void	radix_lsd(t_PushSwap *ps)
 	de_nomalize(ps, min);
 }
 
-bool	is_already_sorted(t_PushSwap *ps)
-{
-	struct Node	*tmp;
-
-	if (ps->stack_a.head == ps->stack_a.tail)
-		return (true);
-
-	tmp = ps->stack_a.head->next;
-	while (tmp != NULL && tmp->prev->number < tmp->number)
-		tmp = tmp->next;
-
-	return (tmp == NULL);
-}
-
-bool	has_duplicate(t_PushSwap *ps, long long num)
-{
-	struct Node* target;
-
-	if (!ps->stack_a.head)
-		return (false);
-
-	target = ps->stack_a.head;
-	while(target != NULL)
-	{
-		if (target->number == num)
-			return (true);
-		target = target->next;
-	}
-	return (false);
-}
 
 void	main_core(char **ptrr)
 {
@@ -229,7 +199,7 @@ void	main_core(char **ptrr)
 			write(STDOUT_FILENO, "Error\n", 6);
 			exit(1);
 		}
-		num = ft_atoi(ptrr[i]);
+		num = ft_atoll(ptrr[i]);
 		if (has_duplicate(&ps, num))
 		{
 			write(STDOUT_FILENO, "Error\n", 6);
@@ -238,9 +208,53 @@ void	main_core(char **ptrr)
 		add_to_tail(&ps.stack_a, num);
 		i++;
 	}
-
 	if (is_already_sorted(&ps))
 		return ;
+	
+	long long *rank = (long long *)malloc(sizeof(long long) * i);
+	long long k = 0;
+	struct *Node tmp = ps.stack_a.head;
+	while (tmp != NULL)
+	{
+		rank[k++] = tmp->number;
+		tmp = tmp->next;
+	}
+	
+	long long *max;
+	sorted_line;
+	max = rank[0];
+	
+	down = elements;
+	long long tmp;
+	max = 0;
+	k = 1;
+	while (elements--)
+	{
+		k = 0;
+		 while (k <= target && rank[max] < rank[k])
+		{
+			max = k;
+			k++;
+		}
+		tmp = rank[target];
+		rank[target] = rank[max]
+		rank[max] = tmp;
+		down--;
+	}
+	
+	k = 0;
+	tmp = ps.stack_a.head;
+	while (tmp != NULL)
+	{
+		while (rank[k++])
+		{
+			if (tmp->number == rank[k])
+				tmp->rank = k;
+			k++;
+		}
+		tmp = tmp->next;
+	}
+	//このあとradix_lsdのnumberの部分をrankに置き換えたものを呼び出す
 
 	if (i == 1)
 		elements_are_one(&ps);
