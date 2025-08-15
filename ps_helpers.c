@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-int	is_int_num(const char *nptr)
+bool	is_int_num(const char *nptr)
 {
 	int		i;
 	int		sign;
@@ -21,21 +21,21 @@ int	is_int_num(const char *nptr)
 	{
 		result = (result * 10) + (nptr[i] - '0');
 		if (sign == 1 && result > INT_MAX)
-			return (-1);
-		if (sign == -1 && result > (long)-1 * INT_MIN)
-			return (-1);
+			return (false);
+		if (sign == -1 && result > (long)INT_MAX + 1)
+			return (false);
 		i++;
 	}
 	if (nptr[i] != '\0')
-		return (-1);
-	return (0);
+		return (false);
+	return (true);
 }
 
-long	ft_atol(const char *nptr)
+int	ft_atoi(const char *nptr)
 {
 	int		i;
 	int		sign;
-	long	result;
+	int	result;
 
 	i = 0;
 	sign = 1;
@@ -55,3 +55,6 @@ long	ft_atol(const char *nptr)
 	}
 	return (result * sign);
 }
+
+	
+	

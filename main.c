@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 11:36:14 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/14 15:19:26 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/08/15 16:29:43 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	debug_print_stack_a(t_PushSwap *ps)
 	write(1, "\n", 1);
 	while (c != NULL)
 	{
-		printf("%ld ",c->number);
+		printf("%d ",c->number);
 		c = c->next;
 	}
 	printf("\n");
 }
 
-int	add_to_tail(t_Stack *stack, long num)
+int	add_to_tail(t_Stack *stack, int num)
 {
 	struct Node	*current;
 
@@ -138,7 +138,7 @@ int	count_elements(t_PushSwap *ps)
 	return (elements);
 }
 
-void	radix_lsd_core(t_PushSwap *ps, long range)
+void	radix_lsd_core(t_PushSwap *ps, int range)
 {
 	int	elements;
 	int	bit_counts;
@@ -147,10 +147,10 @@ void	radix_lsd_core(t_PushSwap *ps, long range)
 
 	elements = count_elements(ps);
 	bit_counts = 0;
-	while (bit_counts < 31 && (1 << bit_counts) <= range)
+	while (bit_counts < 63 && (1 << bit_counts) <= range)
 		bit_counts++;
 	shifts = 0;
-	while (bit_counts--)
+	while (bit_counts--)//ここほんとうにあってる？？
 	{
 		n = elements;
 		while (n--)
@@ -168,35 +168,80 @@ void	radix_lsd_core(t_PushSwap *ps, long range)
 
 void	radix_lsd(t_PushSwap *ps)
 {
-	long	min;
-	long		range;
+	int	min;
+	int	max;
+	int	range;
 
-	min = (long)search_min(ps);
-	range = (long)search_max(ps) - min;
-	nomalize(ps, min);
+	min = search_min(ps);
+	max = search_max(ps);
+	range = max - min;
+
+
+	// nomalize(ps, min);
 	radix_lsd_core(ps, range);
 	// de_nomalize(ps, min);
+}
+
+bool	is_already_sorted(t_PushSwap *ps)
+{
+	struct Node	*tmp;
+
+	if (ps->stack_a.head == ps->stack_a.tail)
+		return (true);
+
+	tmp = ps->stack_a.head->next;
+	while (tmp != NULL && tmp->prev->number < tmp->number)
+		tmp = tmp->next;
+
+	return (tmp == NULL);
+}
+
+bool	has_duplicate(t_PushSwap *ps, int num)
+{
+	struct Node* target;
+
+	if (!ps->stack_a.head)
+		return (false);
+
+	target = ps->stack_a.head;
+	while(target != NULL)
+	{
+		if (target->number == num)
+			return (true);
+		target = target->next;
+	}
+	return (false);
 }
 
 void	main_core(char **ptrr)
 {
 	t_PushSwap	ps;
 	int			i;
+	int	num;
 
 	ps.stack_a = (t_Stack){NULL, NULL};
 	ps.stack_b = (t_Stack){NULL, NULL};
-	// ps.operation_count = 0;
 	i = 0;
 	while (ptrr[i])
 	{
-		if (is_int_num(ptrr[i]))
+		if (!is_int_num(ptrr[i]))
 		{
 			write(STDOUT_FILENO, "Error\n", 6);
 			exit(1);
 		}
-		add_to_tail(&ps.stack_a, ft_atol(ptrr[i]));
+		num = ft_atoi(ptrr[i]);
+		if (has_duplicate(&ps, num))
+		{
+			write(STDOUT_FILENO, "Error\n", 6);
+			exit(1);
+		}
+		add_to_tail(&ps.stack_a, num);
 		i++;
 	}
+
+	if (is_already_sorted(&ps))
+		return ;
+
 	if (i == 1)
 		elements_are_one(&ps);
 	else if (i == 2)
