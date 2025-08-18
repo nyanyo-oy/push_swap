@@ -182,6 +182,30 @@ void	radix_lsd(t_PushSwap *ps)
 	de_nomalize(ps, min);
 }
 
+long long	*bubble(long long *rank, int elements)
+{
+	long long	tmp;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < elements - 1)
+	{
+		j = 0
+		while (rank[j + 1])
+		{
+			if (rank[j] > rank[j+1])
+			{
+				tmp = rank[j];
+				rank[j] = rank[j + 1];
+				rank[j + 1] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (rank);
+}
 
 void	main_core(char **ptrr)
 {
@@ -211,42 +235,24 @@ void	main_core(char **ptrr)
 	if (is_already_sorted(&ps))
 		return ;
 	
-	long long *rank = (long long *)malloc(sizeof(long long) * i);
-	long long k = 0;
+	long long *rank;
+	int	k;
+
+	rank = (long long *)malloc(sizeof(long long) * i);
 	struct *Node tmp = ps.stack_a.head;
+	k = 0;
 	while (tmp != NULL)
 	{
 		rank[k++] = tmp->number;
 		tmp = tmp->next;
 	}
-	
-	long long *max;
-	sorted_line;
-	max = rank[0];
-	
-	down = elements;
-	long long tmp;
-	max = 0;
-	k = 1;
-	while (elements--)
-	{
-		k = 0;
-		 while (k <= target && rank[max] < rank[k])
-		{
-			max = k;
-			k++;
-		}
-		tmp = rank[target];
-		rank[target] = rank[max]
-		rank[max] = tmp;
-		down--;
-	}
+	rank = bubble(rank, elements);
 	
 	k = 0;
 	tmp = ps.stack_a.head;
 	while (tmp != NULL)
 	{
-		while (rank[k++])
+		while (rank[k])
 		{
 			if (tmp->number == rank[k])
 				tmp->rank = k;
@@ -254,6 +260,7 @@ void	main_core(char **ptrr)
 		}
 		tmp = tmp->next;
 	}
+	
 	//このあとradix_lsdのnumberの部分をrankに置き換えたものを呼び出す
 
 	if (i == 1)
@@ -270,6 +277,9 @@ void	main_core(char **ptrr)
 		radix_lsd(&ps);
 	// debug_print_stack_a(&ps);
 }
+//////////////
+	
+
 
 
 #include <stdlib.h>
