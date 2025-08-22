@@ -19,7 +19,16 @@ void	debug_print_stack_a(t_PushSwap *ps)
 {
 	struct Node	*c = ps->stack_a.head;
 
-	write(1, "\n", 1);
+	// write(1, "\n", 1);
+	while (c != NULL)
+	{
+		printf("%lld ",c->rank);
+		c = c->next;
+	}
+	printf("\n");
+	
+	c = ps->stack_a.head;
+
 	while (c != NULL)
 	{
 		printf("%lld ",c->number);
@@ -62,6 +71,7 @@ int	stack_head_to_head(t_Stack *dst, t_Stack *src)//push
 	if (!new)
 		return (-1);
 	new->number = src->head->number;
+	new->rank = src->head->rank;
 	old_node = src->head;
 	src->head = src->head->next;
 	if (src->head)
@@ -113,13 +123,18 @@ int	move_tail_to_head(t_Stack *stack)//reverse_rotate
 
 int	swap(t_Stack *stack)
 {
-	long long	tmp;
+	long long	tmp_num;
+	long long	tmp_rank;
 
 	if (!stack || !stack->head || !stack->head->next)
 		return (-1);
-	tmp = stack->head->number;
+	tmp_num = stack->head->number;
 	stack->head->number = stack->head->next->number;
-	stack->head->next->number = tmp;
+	stack->head->next->number = tmp_num;
+	
+	tmp_rank = stack->head->rank;
+	stack->head->rank = stack->head->next->rank;
+	stack->head->next->rank = tmp_rank;
 	return (0);
 }//safety要確認
 
@@ -145,6 +160,8 @@ void	radix_lsd_core(t_PushSwap *ps, long long range)
 	int	n;
 	int	shifts;
 
+	// debug_print_stack_a(ps);///////////////////////////////////////
+	
 	elements = count_elements(ps);
 	bit_counts = 0;
 	while (bit_counts < 63 && (1LL << bit_counts) <= range)
@@ -155,7 +172,7 @@ void	radix_lsd_core(t_PushSwap *ps, long long range)
 		n = elements;
 		while (n--)
 		{
-			if ((ps->stack_a.head->number >> shifts) & 1)
+			if ((ps->stack_a.head->rank >> shifts) & 1)
 				ra(ps);
 			else
 				pb(ps);
@@ -168,18 +185,19 @@ void	radix_lsd_core(t_PushSwap *ps, long long range)
 
 void	radix_lsd(t_PushSwap *ps)
 {
-	long long	min;
-	long long	max;
+	// long long	min;
+	// long long	max;
 	long long	range;
 
-	min = search_min(ps);
-	max = search_max(ps);
-	range = max - min;
+	// min = search_min(ps);
+	// max = search_max(ps);
+	// range = max - min;
+	 
+	range = count_elements(ps) - 1;
 
-
-	nomalize(ps, min);
+	// nomalize(ps, min);
 	radix_lsd_core(ps, range);
-	de_nomalize(ps, min);
+	// de_nomalize(ps, min);
 }
 
 long long	*bubble(long long *rank, int elements)
@@ -191,8 +209,8 @@ long long	*bubble(long long *rank, int elements)
 	i = 0;
 	while (i < elements - 1)
 	{
-		j = 0
-		while (rank[j + 1])
+		j = 0;
+		while (j < elements - 1 -i)
 		{
 			if (rank[j] > rank[j+1])
 			{
@@ -207,7 +225,7 @@ long long	*bubble(long long *rank, int elements)
 	return (rank);
 }
 
-void	main_core(char **ptrr)
+int	main_core(char **ptrr)
 {
 	t_PushSwap	ps;
 	int			i;
@@ -221,25 +239,28 @@ void	main_core(char **ptrr)
 		if (!is_int_num(ptrr[i]))
 		{
 			write(STDOUT_FILENO, "Error\n", 6);
-			exit(1);
+			return (-1);
 		}
 		num = ft_atoll(ptrr[i]);
 		if (has_duplicate(&ps, num))
 		{
 			write(STDOUT_FILENO, "Error\n", 6);
-			exit(1);
+			return (-1);
 		}
 		add_to_tail(&ps.stack_a, num);
 		i++;
 	}
 	if (is_already_sorted(&ps))
-		return ;
+		return (0);
 	
 	long long *rank;
 	int	k;
+	int elements;
+	
+	elements = i;
 
-	rank = (long long *)malloc(sizeof(long long) * i);
-	struct *Node tmp = ps.stack_a.head;
+	rank = (long long *)malloc(sizeof(long long) * elements);
+	struct Node *tmp = ps.stack_a.head;
 	k = 0;
 	while (tmp != NULL)
 	{
@@ -252,10 +273,14 @@ void	main_core(char **ptrr)
 	tmp = ps.stack_a.head;
 	while (tmp != NULL)
 	{
-		while (rank[k])
+		k = 0;
+		while (k < elements)
 		{
 			if (tmp->number == rank[k])
+			{
 				tmp->rank = k;
+				break;
+			}
 			k++;
 		}
 		tmp = tmp->next;
@@ -276,6 +301,9 @@ void	main_core(char **ptrr)
 	else
 		radix_lsd(&ps);
 	// debug_print_stack_a(&ps);
+
+	free (rank);
+	return (0);
 }
 //////////////
 	
@@ -286,16 +314,26 @@ void	main_core(char **ptrr)
 int	main (int arc, char **arv)
 {
 	char	**ptrr;
+	int	i;
+
+	if (arc < 2)
+		return (0);
 
 	if (arc == 2)
 	{
-		ptrr = split_spht(arv[1]);
+		ptrr = split_spht(arv[1]);//split_sphtのメモリ処理
 		main_core(ptrr);
+		
+		i = 0;
+		while (ptrr[i])
+			free (ptrr[i++]);
+		free(ptrr);
 	}
-	else if (arc >= 3)
+	else
 	{
 		ptrr = &arv[1];
 		main_core(ptrr);
 	}
+
 	return (0);
 }

@@ -18,7 +18,8 @@
 
 typedef struct Node
 {
-	long long		number;
+	long long	number;
+	long long	rank;
 	struct Node	*next;
 	struct Node	*prev;
 }	Node;

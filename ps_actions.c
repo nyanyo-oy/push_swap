@@ -69,7 +69,6 @@ void	de_nomalize(t_PushSwap *ps, long long min)
 	target = ps->stack_a.head;
 	while (target != NULL)
 	{
-
 		target->number += min;
 		target = target->next;
 	}
