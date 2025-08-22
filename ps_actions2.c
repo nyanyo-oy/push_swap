@@ -12,71 +12,9 @@
 
 #include "push_swap.h"
 
-long long	search_min(t_PushSwap *ps)
-{
-	struct Node	*target;
-	int		min;
-
-	target = ps->stack_a.head;
-	if (ps->stack_a.head == ps->stack_a.tail)
-		return (target->number);
-	min = target->number;
-	target = target->next;
-	while (target != NULL)
-	{
-		if (min > target->number)
-			min = target->number;
-		target = target->next;
-	}
-	return (min);
-}
-
-long long	search_max(t_PushSwap *ps)
-{
-	struct Node	*target;
-	int		max;
-
-	target = ps->stack_a.head;
-	if (ps->stack_a.head == ps->stack_a.tail)
-		return (target->number);
-	max = target->number;
-	target = target->next;
-	while (target != NULL)
-	{
-		if (max < target->number)
-			max = target->number;
-		target = target->next;
-	}
-	return (max);
-}
-
-void	nomalize(t_PushSwap *ps, long long min)
-{
-	struct Node	*target;
-
-	target = ps->stack_a.head;
-	while (target != NULL)
-	{
-		target->number -= min;
-		target = target->next;
-	}
-}
-
-void	de_nomalize(t_PushSwap *ps, long long min)
-{
-	struct Node	*target;
-
-	target = ps->stack_a.head;
-	while (target != NULL)
-	{
-		target->number += min;
-		target = target->next;
-	}
-}
-
 bool	is_already_sorted(t_PushSwap *ps)
 {
-	struct Node	*tmp;
+	struct t_node	*tmp;
 
 	if (ps->stack_a.head == ps->stack_a.tail)
 		return (true);
@@ -90,7 +28,7 @@ bool	is_already_sorted(t_PushSwap *ps)
 
 bool	has_duplicate(t_PushSwap *ps, long long num)
 {
-	struct Node* target;
+	struct t_node* target;
 
 	if (!ps->stack_a.head)
 		return (false);
@@ -104,3 +42,65 @@ bool	has_duplicate(t_PushSwap *ps, long long num)
 	}
 	return (false);
 }
+
+// long long	search_min(t_PushSwap *ps)
+// {
+// 	struct t_node	*target;
+// 	int		min;
+
+// 	target = ps->stack_a.head;
+// 	if (ps->stack_a.head == ps->stack_a.tail)
+// 		return (target->number);
+// 	min = target->number;
+// 	target = target->next;
+// 	while (target != NULL)
+// 	{
+// 		if (min > target->number)
+// 			min = target->number;
+// 		target = target->next;
+// 	}
+// 	return (min);
+// }
+
+// long long	search_max(t_PushSwap *ps)
+// {
+// 	struct t_node	*target;
+// 	int		max;
+
+// 	target = ps->stack_a.head;
+// 	if (ps->stack_a.head == ps->stack_a.tail)
+// 		return (target->number);
+// 	max = target->number;
+// 	target = target->next;
+// 	while (target != NULL)
+// 	{
+// 		if (max < target->number)
+// 			max = target->number;
+// 		target = target->next;
+// 	}
+// 	return (max);
+// }
+
+// void	nomalize(t_PushSwap *ps, long long min)
+// {
+// 	struct t_node	*target;
+
+// 	target = ps->stack_a.head;
+// 	while (target != NULL)
+// 	{
+// 		target->number -= min;
+// 		target = target->next;
+// 	}
+// }
+
+// void	de_nomalize(t_PushSwap *ps, long long min)
+// {
+// 	struct t_node	*target;
+
+// 	target = ps->stack_a.head;
+// 	while (target != NULL)
+// 	{
+// 		target->number += min;
+// 		target = target->next;
+// 	}
+// }

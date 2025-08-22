@@ -12,21 +12,13 @@
 
 #include "push_swap.h"
 
-
-int	elements_are_one(t_PushSwap *ps)
-{
-	(void)ps;
-	return (0);
-}
-
-int	elements_are_two(t_PushSwap *ps)
+void	elements_are_two(t_PushSwap *ps)
 {
 	if (ps->stack_a.head->number > ps->stack_a.tail->number)
 		ra(ps);
-	return (0);
 }
 
-int	elements_are_three(t_PushSwap *ps)
+void	elements_are_three(t_PushSwap *ps)
 {
 	if (ps->stack_a.head->number > ps->stack_a.head->next->number && 
 		ps->stack_a.head->number > ps->stack_a.tail->number)
@@ -43,12 +35,11 @@ int	elements_are_three(t_PushSwap *ps)
 	{
 		sa(ps);
 	}
-	return (0);
 }
 
-int search_min_index(t_PushSwap *ps)
+int	search_min_index(t_PushSwap *ps)
 {
-	struct Node *tmp;
+	struct t_node *tmp;
 	int	min;
 	int	i;
 	
@@ -70,11 +61,10 @@ int search_min_index(t_PushSwap *ps)
 		tmp = tmp->next;
 		i++;
 	}
-	
 	return (i);
 }
 
-int	elements_are_four(t_PushSwap *ps)
+void	elements_are_four(t_PushSwap *ps)
 {
 	int	i;
 
@@ -95,55 +85,27 @@ int	elements_are_four(t_PushSwap *ps)
 	pb(ps);
 	elements_are_three(ps);
 	pa(ps);
-	return (0);
 }
 
-void elements_are_five_core(t_PushSwap *ps)
+void	elements_are_five(t_PushSwap *ps)
 {
 	int i;
 	i = search_min_index(ps);
 	if (i == 1)
-	{
 		sa(ps);
-	}
-	if (i == 2)
+	else if (i == 2)
 	{
 		ra(ps);
 		ra(ps);
 	}
-	if (i == 3)
+	else if (i == 3)
 	{
 		rra(ps);
 		rra(ps);
 	}
 	else if (i == 4)
-	{
 		rra(ps);
-	}
-	pb(ps);
-
-	i = search_min_index(ps);
-	if (i == 1)
-	{
-		sa(ps);
-	}
-	else if (i == 2)
-	{
-		rra(ps);
-		rra(ps);
-	}
-	else if (i == 3)
-	{
-		rra(ps);
-	}
-	pb(ps);
-}
-
-int	elements_are_five(t_PushSwap *ps)
-{
-	elements_are_five_core(ps);
-	elements_are_three(ps);
+	pb(ps);	
+	elements_are_four(ps);
 	pa(ps);
-	pa(ps);
-	return (0);
 }

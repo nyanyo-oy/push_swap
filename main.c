@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 11:36:14 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/15 17:42:11 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:56:19 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,132 +15,14 @@
 #include <string.h>
 
 #include <stdio.h>
-void	debug_print_stack_a(t_PushSwap *ps)
-{
-	struct Node	*c = ps->stack_a.head;
 
-	// write(1, "\n", 1);
-	while (c != NULL)
-	{
-		printf("%lld ",c->rank);
-		c = c->next;
-	}
-	printf("\n");
-	
-	c = ps->stack_a.head;
 
-	while (c != NULL)
-	{
-		printf("%lld ",c->number);
-		c = c->next;
-	}
-	printf("\n");
-}
 
-long long	add_to_tail(t_Stack *stack, int num)
-{
-	struct Node	*current;
 
-	current = (struct Node *)malloc(sizeof(struct Node));
-	if (!current)
-		return (-1);
-	current->number = num;
-	current->next = NULL;
-	if (stack->tail == NULL)
-	{
-		stack->head = current;
-		current->prev = NULL;
-	}
-	else
-	{
-		stack->tail->next = current;
-		current->prev = stack->tail;
-	}
-	stack->tail = current;
-	return (0);
-}//safetyなし
-
-int	stack_head_to_head(t_Stack *dst, t_Stack *src)//push
-{
-	struct Node	*new;
-	struct Node	*old_node;
-
-	if (!src || !src->head)
-		return (-1);
-	new = (struct Node *)malloc(sizeof(struct Node));
-	if (!new)
-		return (-1);
-	new->number = src->head->number;
-	new->rank = src->head->rank;
-	old_node = src->head;
-	src->head = src->head->next;
-	if (src->head)
-		src->head->prev = NULL;
-	else
-		src->tail = NULL;
-	free(old_node);
-	new->next = dst->head;
-	new->prev = NULL;
-	if (dst->head)
-		dst->head->prev = new;
-	else
-		dst->tail = new;
-	dst->head = new;
-	return (0);
-}//safety要確認
-
-int	move_head_to_tail(t_Stack *stack)//rotate
-{
-	struct Node	*tmp;
-
-	if (!stack || !stack->head || !stack->head->next)
-		return (-1);
-	tmp = stack->head;
-	stack->head = stack->head->next;
-	stack->head->prev = NULL;
-	tmp->prev = stack->tail;
-	stack->tail->next = tmp;
-	tmp->next = NULL;
-	stack->tail = tmp;
-	return (0);
-}
-
-int	move_tail_to_head(t_Stack *stack)//reverse_rotate
-{
-	struct Node	*tmp;
-
-	if (!stack || !stack->head || !stack->head->next)
-		return (-1);
-	tmp = stack->tail;
-	stack->tail = stack->tail->prev;
-	stack->tail->next = NULL;
-	tmp->next = stack->head;
-	stack->head->prev = tmp;
-	tmp->prev = NULL;
-	stack->head = tmp;
-	return (0);
-}
-
-int	swap(t_Stack *stack)
-{
-	long long	tmp_num;
-	long long	tmp_rank;
-
-	if (!stack || !stack->head || !stack->head->next)
-		return (-1);
-	tmp_num = stack->head->number;
-	stack->head->number = stack->head->next->number;
-	stack->head->next->number = tmp_num;
-	
-	tmp_rank = stack->head->rank;
-	stack->head->rank = stack->head->next->rank;
-	stack->head->next->rank = tmp_rank;
-	return (0);
-}//safety要確認
 
 long long	count_elements(t_PushSwap *ps)
 {
-	struct Node	*tmp;
+	struct t_node	*tmp;
 	int			elements;
 
 	tmp = ps->stack_a.head;
@@ -153,21 +35,21 @@ long long	count_elements(t_PushSwap *ps)
 	return (elements);
 }
 
-void	radix_lsd_core(t_PushSwap *ps, long long range)
+void	radix_lsd(t_PushSwap *ps)
 {
-	int	elements;
+	int			elements;
 	long long	bit_counts;
-	int	n;
-	int	shifts;
+	int			n;
+	int			shifts;
+	long long	range;
 
-	// debug_print_stack_a(ps);///////////////////////////////////////
-	
 	elements = count_elements(ps);
+	range = elements - 1;
 	bit_counts = 0;
 	while (bit_counts < 63 && (1LL << bit_counts) <= range)
 		bit_counts++;
 	shifts = 0;
-	while (bit_counts--)//ここほんとうにあってる？？
+	while (bit_counts--)
 	{
 		n = elements;
 		while (n--)
@@ -183,36 +65,19 @@ void	radix_lsd_core(t_PushSwap *ps, long long range)
 	}
 }
 
-void	radix_lsd(t_PushSwap *ps)
-{
-	// long long	min;
-	// long long	max;
-	long long	range;
-
-	// min = search_min(ps);
-	// max = search_max(ps);
-	// range = max - min;
-	 
-	range = count_elements(ps) - 1;
-
-	// nomalize(ps, min);
-	radix_lsd_core(ps, range);
-	// de_nomalize(ps, min);
-}
-
 long long	*bubble(long long *rank, int elements)
 {
 	long long	tmp;
-	int	i;
-	int	j;
+	int			i;
+	int			j;
 
 	i = 0;
 	while (i < elements - 1)
 	{
 		j = 0;
-		while (j < elements - 1 -i)
+		while (j < elements - 1 - i)
 		{
-			if (rank[j] > rank[j+1])
+			if (rank[j] > rank[j + 1])
 			{
 				tmp = rank[j];
 				rank[j] = rank[j + 1];
@@ -225,6 +90,45 @@ long long	*bubble(long long *rank, int elements)
 	return (rank);
 }
 
+int	raning_nodes(t_PushSwap *ps)
+{
+	struct t_node	*tmp;
+	long long		*rank;
+	int				k;
+	int				elements;
+
+	elements = count_elements(ps);
+	rank = (long long *)malloc(sizeof(long long) * elements);
+	if (!rank)
+		return (-1);
+	tmp = ps->stack_a.head;
+	k = 0;
+	while (tmp != NULL)
+	{
+		rank[k++] = tmp->number;
+		tmp = tmp->next;
+	}
+	rank = bubble(rank, elements);
+	k = 0;
+	tmp = ps->stack_a.head;
+	while (tmp != NULL)
+	{
+		k = 0;
+		while (k < elements)
+		{
+			if (tmp->number == rank[k])
+			{
+				tmp->rank = k;
+				break ;
+			}
+			k++;
+		}
+		tmp = tmp->next;
+	}
+	free (rank);
+	return (0);
+}
+
 int	main_core(char **ptrr)
 {
 	t_PushSwap	ps;
@@ -233,6 +137,7 @@ int	main_core(char **ptrr)
 
 	ps.stack_a = (t_Stack){NULL, NULL};
 	ps.stack_b = (t_Stack){NULL, NULL};
+
 	i = 0;
 	while (ptrr[i])
 	{
@@ -252,44 +157,9 @@ int	main_core(char **ptrr)
 	}
 	if (is_already_sorted(&ps))
 		return (0);
-	
-	long long *rank;
-	int	k;
-	int elements;
-	
-	elements = i;
-
-	rank = (long long *)malloc(sizeof(long long) * elements);
-	struct Node *tmp = ps.stack_a.head;
-	k = 0;
-	while (tmp != NULL)
-	{
-		rank[k++] = tmp->number;
-		tmp = tmp->next;
-	}
-	rank = bubble(rank, elements);
-	
-	k = 0;
-	tmp = ps.stack_a.head;
-	while (tmp != NULL)
-	{
-		k = 0;
-		while (k < elements)
-		{
-			if (tmp->number == rank[k])
-			{
-				tmp->rank = k;
-				break;
-			}
-			k++;
-		}
-		tmp = tmp->next;
-	}
-	
-	//このあとradix_lsdのnumberの部分をrankに置き換えたものを呼び出す
 
 	if (i == 1)
-		elements_are_one(&ps);
+		return (0);
 	else if (i == 2)
 		elements_are_two(&ps);
 	else if (i == 3)
@@ -299,31 +169,30 @@ int	main_core(char **ptrr)
 	else if (i == 5)
 		elements_are_five(&ps);
 	else
+	{
+		raning_nodes(&ps);
 		radix_lsd(&ps);
-	// debug_print_stack_a(&ps);
-
-	free (rank);
+	}
 	return (0);
 }
-//////////////
-	
 
-
-
-#include <stdlib.h>
 int	main (int arc, char **arv)
 {
 	char	**ptrr;
-	int	i;
+	int		i;
+	int		ret;
 
+	ret = 0;
 	if (arc < 2)
 		return (0);
 
 	if (arc == 2)
 	{
-		ptrr = split_spht(arv[1]);//split_sphtのメモリ処理
-		main_core(ptrr);
-		
+		ptrr = split_spht(arv[1]);
+		if (!ptrr)
+			return (-1);
+		ret = main_core(ptrr);
+
 		i = 0;
 		while (ptrr[i])
 			free (ptrr[i++]);
@@ -332,8 +201,26 @@ int	main (int arc, char **arv)
 	else
 	{
 		ptrr = &arv[1];
-		main_core(ptrr);
+		ret = main_core(ptrr);
 	}
-
-	return (0);
+	return (ret);
 }
+
+//void	debug_print_stack_a(t_PushSwap *ps)
+//{
+//	struct t_node	*c = ps->stack_a.head;
+
+//	while (c != NULL)
+//	{
+//		printf("%lld ",c->rank);
+//		c = c->next;
+//	}
+//	printf("\n");
+//	c = ps->stack_a.head;
+//	while (c != NULL)
+//	{
+//		printf("%lld ",c->number);
+//		c = c->next;
+//	}
+//	printf("\n");
+//}

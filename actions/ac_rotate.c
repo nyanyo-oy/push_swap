@@ -6,45 +6,37 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 12:13:10 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/14 12:13:11 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:41:18 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	do_ra(t_PushSwap *ps)
+void	do_ra(t_PushSwap *ps)
 {
-	return (move_head_to_tail(&ps->stack_a));
+	move_head_to_tail(&ps->stack_a);
 }
 
-int	ra(t_PushSwap *ps)
+void	ra(t_PushSwap *ps)
 {
-	if (do_ra(ps))
-		return (-1);
-	// print_newline(ps);
+	do_ra(ps);
 	write(1, "ra\n", 3);
-	return (0);
 }
 
-int	do_rb(t_PushSwap *ps)
+void	do_rb(t_PushSwap *ps)
 {
-	return (move_head_to_tail(&ps->stack_b));
+	move_head_to_tail(&ps->stack_b);
 }
 
-int	rb(t_PushSwap *ps)
+void	rb(t_PushSwap *ps)
 {
-	if (do_rb(ps))
-		return (-1);
-	// print_newline(ps);
+	do_rb(ps);
 	write(1, "rb\n", 3);
-	return (0);
 }
 
-int	rr(t_PushSwap *ps)
+void	rr(t_PushSwap *ps)
 {
-	if (do_ra(ps) || do_rb(ps))
-		return (-1);
-	// print_newline(ps);
+	do_ra(ps);
+	do_rb(ps);
 	write(1, "rr\n", 3);
-	return (0);
 }
