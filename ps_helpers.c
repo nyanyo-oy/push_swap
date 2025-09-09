@@ -1,6 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ps_helpers.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/22 15:59:56 by kenakamu          #+#    #+#             */
+/*   Updated: 2025/08/22 16:06:19 by kenakamu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-bool	is_already_sorted(t_PushSwap *ps)
+long long	count_elements(t_pushswap *ps)
+{
+	struct t_node	*tmp;
+	int				elements;
+
+	tmp = ps->stack_a.head;
+	elements = 0;
+	while (tmp != NULL)
+	{
+		tmp = tmp->next;
+		elements++;
+	}
+	return (elements);
+}
+
+bool	is_already_sorted(t_pushswap *ps)
 {
 	struct t_node	*tmp;
 
@@ -14,15 +41,15 @@ bool	is_already_sorted(t_PushSwap *ps)
 	return (tmp == NULL);
 }
 
-bool	has_duplicate(t_PushSwap *ps, long long num)
+bool	has_duplicate(t_pushswap *ps, long long num)
 {
-	struct t_node* target;
+	struct t_node	*target;
 
 	if (!ps->stack_a.head)
 		return (false);
 
 	target = ps->stack_a.head;
-	while(target != NULL)
+	while (target != NULL)
 	{
 		if (target->number == num)
 			return (true);
@@ -64,8 +91,8 @@ bool	is_int_num(const char *nptr)
 
 long long	ft_atoll(const char *nptr)
 {
-	int		i;
-	int		sign;
+	int			i;
+	int			sign;
 	long long	result;
 
 	i = 0;

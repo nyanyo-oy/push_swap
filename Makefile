@@ -7,8 +7,9 @@ SRCS	=	main.c					\
 			actions/ac_rotate.c		\
 			actions/ac_swap.c		\
 			ps_actions.c			\
+			ps_helpers.c 			\
+			ps_sorts.c				\
 			under_five_elements.c	\
-			ps_helpers.c
 			
 OBJDIR	=	OBJS
 OBJS	=	$(SRCS:%.c=$(OBJDIR)/%.o)

@@ -12,29 +12,29 @@
 
 #include "push_swap.h"
 
-void	do_ra(t_PushSwap *ps)
+void	do_ra(t_pushswap *ps)
 {
 	move_head_to_tail(&ps->stack_a);
 }
 
-void	ra(t_PushSwap *ps)
+void	ra(t_pushswap *ps)
 {
 	do_ra(ps);
 	write(1, "ra\n", 3);
 }
 
-void	do_rb(t_PushSwap *ps)
+void	do_rb(t_pushswap *ps)
 {
 	move_head_to_tail(&ps->stack_b);
 }
 
-void	rb(t_PushSwap *ps)
+void	rb(t_pushswap *ps)
 {
 	do_rb(ps);
 	write(1, "rb\n", 3);
 }
 
-void	rr(t_PushSwap *ps)
+void	rr(t_pushswap *ps)
 {
 	do_ra(ps);
 	do_rb(ps);

@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-long long	add_to_tail(t_Stack *stack, int num)
+long long	add_to_tail(t_stack *stack, int num)
 {
 	struct t_node	*current;
 
@@ -35,7 +35,7 @@ long long	add_to_tail(t_Stack *stack, int num)
 	return (0);
 }
 
-int	stack_head_to_head(t_Stack *dst, t_Stack *src)//push
+int	stack_head_to_head(t_stack *dst, t_stack *src)
 {
 	struct t_node	*new;
 	struct t_node	*old_node;
@@ -64,7 +64,7 @@ int	stack_head_to_head(t_Stack *dst, t_Stack *src)//push
 	return (0);
 }
 
-int	move_head_to_tail(t_Stack *stack)
+int	move_head_to_tail(t_stack *stack)
 {
 	struct t_node	*tmp;
 
@@ -80,7 +80,7 @@ int	move_head_to_tail(t_Stack *stack)
 	return (0);
 }
 
-int	move_tail_to_head(t_Stack *stack)
+int	move_tail_to_head(t_stack *stack)
 {
 	struct t_node	*tmp;
 
@@ -96,7 +96,7 @@ int	move_tail_to_head(t_Stack *stack)
 	return (0);
 }
 
-int	swap(t_Stack *stack)
+int	swap(t_stack *stack)
 {
 	long long	tmp_num;
 	long long	tmp_rank;

@@ -12,13 +12,13 @@
 
 #include "push_swap.h"
 
-void	pa(t_PushSwap *ps)
+void	pa(t_pushswap *ps)
 {
 	stack_head_to_head(&ps->stack_a, &ps->stack_b);
 	write (1, "pa\n", 3);
 }
 
-void	pb(t_PushSwap *ps)
+void	pb(t_pushswap *ps)
 {
 	stack_head_to_head(&ps->stack_b, &ps->stack_a);
 	write(1, "pb\n", 3);
