@@ -12,10 +12,11 @@
 
 #include "push_swap.h"
 
-static void radix_lsd_alg(t_pushswap *ps, int bit_counts, int elements)
+static void	radix_lsd_alg(t_pushswap *ps, int bit_counts, int elements)
 {
 	int	n;
-	int shifts;
+	int	shifts;
+
 	shifts = 0;
 	while (bit_counts--)
 	{
@@ -70,7 +71,8 @@ long long	*bubble(long long *rank, int elements)
 	return (rank);
 }
 
-static void	ranking_nodes_relay_ranks(t_pushswap *ps,long long *rank, int elements)
+static void	ranking_nodes_relay_ranks(t_pushswap *ps,
+				long long *rank, int elements)
 {
 	struct t_node	*tmp;
 	int				k;

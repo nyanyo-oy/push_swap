@@ -12,37 +12,25 @@
 
 #include "push_swap.h"
 
-static void	main_core_rooter(t_pushswap *ps, int elements);
-static int	main_core(char **ptrr);
-
-int	main (int arc, char **arv)
+static void	main_core_rooter(t_pushswap *ps, int elements)
 {
-	char	**ptrr;
-	int		i;
-	int		ret;
-
-	ret = 0;
-	if (arc < 2)
-		return (0);
-
-	if (arc == 2)
-	{
-		ptrr = split_spht(arv[1]);
-		if (!ptrr)
-			return (-1);
-		ret = main_core(ptrr);
-
-		i = 0;
-		while (ptrr[i])
-			free (ptrr[i++]);
-		free(ptrr);
-	}
+	if (is_already_sorted(ps))
+		return ;
+	if (elements == 1)
+		return ;
+	else if (elements == 2)
+		elements_are_two(ps);
+	else if (elements == 3)
+		elements_are_three(ps);
+	else if (elements == 4)
+		elements_are_four(ps);
+	else if (elements == 5)
+		elements_are_five(ps);
 	else
 	{
-		ptrr = &arv[1];
-		ret = main_core(ptrr);
+		ranking_nodes(ps);
+		radix_lsd(ps);
 	}
-	return (ret);
 }
 
 static int	main_core(char **ptrr)
@@ -74,25 +62,32 @@ static int	main_core(char **ptrr)
 	return (0);
 }
 
-static void	main_core_rooter(t_pushswap *ps, int elements)
+int	main(int arc, char **arv)
 {
-	if (is_already_sorted(ps))
-		return ;
-	if (elements == 1)
-		return ;
-	else if (elements == 2)
-		elements_are_two(ps);
-	else if (elements == 3)
-		elements_are_three(ps);
-	else if (elements == 4)
-		elements_are_four(ps);
-	else if (elements == 5)
-		elements_are_five(ps);
+	char	**ptrr;
+	int		i;
+	int		ret;
+
+	ret = 0;
+	if (arc < 2)
+		return (0);
+	if (arc == 2)
+	{
+		ptrr = split_spht(arv[1]);
+		if (!ptrr)
+			return (-1);
+		ret = main_core(ptrr);
+		i = 0;
+		while (ptrr[i])
+			free (ptrr[i++]);
+		free(ptrr);
+	}
 	else
 	{
-		ranking_nodes(ps);
-		radix_lsd(ps);
+		ptrr = &arv[1];
+		ret = main_core(ptrr);
 	}
+	return (ret);
 }
 
 //void	debug_print_stack_a(t_pushswap *ps)

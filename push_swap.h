@@ -17,8 +17,8 @@
 
 typedef struct t_node
 {
-	long long	number;
-	long long	rank;
+	long long		number;
+	long long		rank;
 	struct t_node	*next;
 	struct t_node	*prev;
 }	t_node;
@@ -41,7 +41,6 @@ int				stack_head_to_head(t_stack *dst, t_stack *src);//push
 int				move_tail_to_head(t_stack *Stack);//reverse_rotate
 int				move_head_to_tail(t_stack *Stack);//rotate
 int				swap(t_stack *stack);
-
 
 void			sa(t_pushswap *ps);
 void			sb(t_pushswap *ps);
@@ -69,7 +68,6 @@ bool			is_already_sorted(t_pushswap *ps);
 bool			has_duplicate(t_pushswap *ps, long long num);
 bool			is_int_num(const char *nptr);
 long long		ft_atoll(const char *nptr);
-
 
 void			radix_lsd(t_pushswap *ps);
 long long		*bubble(long long *rank, int elements);

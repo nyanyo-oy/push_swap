@@ -106,7 +106,6 @@ int	swap(t_stack *stack)
 	tmp_num = stack->head->number;
 	stack->head->number = stack->head->next->number;
 	stack->head->next->number = tmp_num;
-
 	tmp_rank = stack->head->rank;
 	stack->head->rank = stack->head->next->rank;
 	stack->head->next->rank = tmp_rank;

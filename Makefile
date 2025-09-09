@@ -9,6 +9,7 @@ SRCS	=	main.c					\
 			ps_actions.c			\
 			ps_helpers.c 			\
 			ps_sorts.c				\
+			ps_validators.c			\
 			under_five_elements.c	\
 			
 OBJDIR	=	OBJS
