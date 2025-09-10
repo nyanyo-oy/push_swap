@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ac_swap.c                                          :+:      :+:    :+:   */
+/*   ac_r_rotate.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 12:13:07 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/22 13:42:31 by kenakamu         ###   ########.fr       */
+/*   Created: 2025/08/14 12:13:12 by kenakamu          #+#    #+#             */
+/*   Updated: 2025/09/10 17:00:27 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
-void	do_sa(t_pushswap *ps)
+void	do_rra(t_pushswap *ps)
 {
-	swap(&ps->stack_a);
+	move_tail_to_head(&ps->stack_a);
 }
 
-void	sa(t_pushswap *ps)
+void	rra(t_pushswap *ps)
 {
-	do_sa(ps);
-	write(1, "sa\n", 3);
+	do_rra(ps);
+	write(1, "rra\n", 4);
 }
 
-void	do_sb(t_pushswap *ps)
+void	do_rrb(t_pushswap *ps)
 {
-	swap(&ps->stack_b);
+	move_tail_to_head(&ps->stack_b);
 }
 
-void	sb(t_pushswap *ps)
+void	rrb(t_pushswap *ps)
 {
-	do_sb(ps);
-	write(1, "sb\n", 3);
+	do_rrb(ps);
+	write(1, "rrb\n", 4);
 }
 
-void	ss(t_pushswap *ps)
+void	rrr(t_pushswap *ps)
 {
-	do_sa(ps);
-	do_sb(ps);
-	write(1, "ss\n", 3);
+	rra(ps);
+	rrb(ps);
+	write(1, "rrr\n", 4);
 }

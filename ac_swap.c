@@ -1,25 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ac_push.c                                          :+:      :+:    :+:   */
+/*   ac_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 12:13:17 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/22 13:37:34 by kenakamu         ###   ########.fr       */
+/*   Created: 2025/08/14 12:13:07 by kenakamu          #+#    #+#             */
+/*   Updated: 2025/09/10 17:00:36 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
-void	pa(t_pushswap *ps)
+void	do_sa(t_pushswap *ps)
 {
-	stack_head_to_head(&ps->stack_a, &ps->stack_b);
-	write (1, "pa\n", 3);
+	swap(&ps->stack_a);
 }
 
-void	pb(t_pushswap *ps)
+void	sa(t_pushswap *ps)
 {
-	stack_head_to_head(&ps->stack_b, &ps->stack_a);
-	write(1, "pb\n", 3);
+	do_sa(ps);
+	write(1, "sa\n", 3);
+}
+
+void	do_sb(t_pushswap *ps)
+{
+	swap(&ps->stack_b);
+}
+
+void	sb(t_pushswap *ps)
+{
+	do_sb(ps);
+	write(1, "sb\n", 3);
+}
+
+void	ss(t_pushswap *ps)
+{
+	do_sa(ps);
+	do_sb(ps);
+	write(1, "ss\n", 3);
 }

@@ -1,10 +1,10 @@
 NAME	=	push_swap
 
 SRCS	=	main.c					\
-			actions/ac_push.c		\
-			actions/ac_r_rotate.c	\
-			actions/ac_rotate.c		\
-			actions/ac_swap.c		\
+			ac_push.c				\
+			ac_r_rotate.c			\
+			ac_rotate.c				\
+			ac_swap.c				\
 			ps_actions.c			\
 			ps_helpers.c 			\
 			ps_sorts.c				\
