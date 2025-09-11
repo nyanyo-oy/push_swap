@@ -33,6 +33,22 @@ static void	main_core_rooter(t_pushswap *ps, int elements)
 	}
 }
 
+void	free_stack(t_stack *stack)
+{
+	struct t_node	*target;
+
+	if (!stack)
+		return ;
+	while (stack->head != NULL)
+	{
+		target = stack->head;
+		stack->head = stack->head->next;
+		free (target);
+	}
+	stack->head = NULL;
+	stack->tail = NULL;
+}
+
 static int	main_core(char **ptrr)
 {
 	t_pushswap	ps;
@@ -46,26 +62,26 @@ static int	main_core(char **ptrr)
 	{
 		if (!is_int_num(ptrr[i]))
 		{
-			write(STDOUT_FILENO, "Error\n", 6);
+			free_stack (&ps.stack_a);
 			return (-1);
 		}
 		num = ft_atoll(ptrr[i]);
 		if (has_duplicate(&ps, num))
 		{
-			write(STDOUT_FILENO, "Error\n", 6);
+			free_stack (&ps.stack_a);
 			return (-1);
 		}
 		add_to_tail(&ps.stack_a, num);
 		i++;
 	}
 	main_core_rooter (&ps, i);
+	free_stack (&ps.stack_a);
 	return (0);
 }
 
 int	main(int arc, char **arv)
 {
 	char	**ptrr;
-	int		i;
 	int		ret;
 
 	ret = 0;
@@ -77,16 +93,15 @@ int	main(int arc, char **arv)
 		if (!ptrr)
 			return (-1);
 		ret = main_core(ptrr);
-		i = 0;
-		while (ptrr[i])
-			free (ptrr[i++]);
-		free(ptrr);
+		free_ptrr(ptrr);
 	}
 	else
 	{
 		ptrr = &arv[1];
 		ret = main_core(ptrr);
 	}
+	if (ret == -1)
+		write(STDOUT_FILENO, "Error\n", 6);
 	return (ret);
 }
 

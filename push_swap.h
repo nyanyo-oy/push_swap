@@ -23,13 +23,13 @@ typedef struct t_node
 	struct t_node	*prev;
 }	t_node;
 
-typedef struct Stack
+typedef struct t_stack
 {
 	t_node	*head;
 	t_node	*tail;
 }	t_stack;
 
-typedef struct PushSwap
+typedef struct t_pushswap
 {
 	t_stack	stack_a;
 	t_stack	stack_b;
@@ -78,4 +78,5 @@ void			elements_are_three(t_pushswap *ps);
 void			elements_are_four(t_pushswap *ps);
 void			elements_are_five(t_pushswap *ps);
 
+void			free_stack(t_stack *stack);
 // void			debug_print_stack_a(t_pushswap *ps);
