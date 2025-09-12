@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 11:36:14 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/22 16:48:05 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 09:35:23 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,6 @@ static void	main_core_rooter(t_pushswap *ps, int elements)
 		ranking_nodes(ps);
 		radix_lsd(ps);
 	}
-}
-
-void	free_stack(t_stack *stack)
-{
-	struct t_node	*target;
-
-	if (!stack)
-		return ;
-	while (stack->head != NULL)
-	{
-		target = stack->head;
-		stack->head = stack->head->next;
-		free (target);
-	}
-	stack->head = NULL;
-	stack->tail = NULL;
 }
 
 static int	main_core(char **ptrr)

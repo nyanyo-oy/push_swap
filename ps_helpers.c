@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:59:56 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/22 16:06:19 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 09:35:18 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,20 @@ long long	ft_atoll(const char *nptr)
 		i++;
 	}
 	return (result * sign);
+}
+
+void	free_stack(t_stack *stack)
+{
+	struct t_node	*target;
+
+	if (!stack)
+		return ;
+	while (stack->head != NULL)
+	{
+		target = stack->head;
+		stack->head = stack->head->next;
+		free (target);
+	}
+	stack->head = NULL;
+	stack->tail = NULL;
 }
