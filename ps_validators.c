@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 20:46:40 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/09 20:46:55 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 15:20:37 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static bool	parse_and_check_overflow(const char *nptr, int start, int sign)
 	return (true);
 }
 
-bool	is_int_num(const char *nptr)
+bool	is_integer(const char *nptr)
 {
 	int		i;
 	int		sign;
@@ -61,4 +61,20 @@ bool	is_int_num(const char *nptr)
 		i++;
 	}
 	return (parse_and_check_overflow(nptr, i, sign));
+}
+
+bool	is_value_duplicated(t_pushswap *ps, long long num)
+{
+	struct t_node	*target;
+
+	if (!ps->stack_a.head)
+		return (false);
+	target = ps->stack_a.head;
+	while (target != NULL)
+	{
+		if (target->number == num)
+			return (true);
+		target = target->next;
+	}
+	return (false);
 }

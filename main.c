@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 11:36:14 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/12 09:35:23 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/14 20:40:26 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,44 @@ static void	main_core_rooter(t_pushswap *ps, int elements)
 	}
 }
 
-static int	main_core(char **ptrr)
+static int	validate_and_load_args(t_pushswap *ps, char **ptrr)
 {
-	t_pushswap	ps;
 	int			i;
 	long long	num;
 
-	ps.stack_a = (t_stack){NULL, NULL};
-	ps.stack_b = (t_stack){NULL, NULL};
 	i = 0;
 	while (ptrr[i])
 	{
-		if (!is_int_num(ptrr[i]))
+		if (is_integer(ptrr[i]) == false)
 		{
-			free_stack (&ps.stack_a);
-			return (-1);
+			free_stack (&ps->stack_a);
+			return (1);
 		}
 		num = ft_atoll(ptrr[i]);
-		if (has_duplicate(&ps, num))
+		if (is_value_duplicated(ps, num) != SUCCESS)
 		{
-			free_stack (&ps.stack_a);
-			return (-1);
+			free_stack (&ps->stack_a);
+			return (1);
 		}
-		add_to_tail(&ps.stack_a, num);
+		if (add_to_tail(&ps->stack_a, num) != SUCCESS)
+		{
+			free_stack (&ps->stack_a);
+			return (1);
+		}
 		i++;
 	}
-	main_core_rooter (&ps, i);
+	return (0);
+}
+
+int	pushswap(char **ptrr, int elements)
+{
+	t_pushswap	ps;
+
+	ps.stack_a = (t_stack){NULL, NULL};
+	ps.stack_b = (t_stack){NULL, NULL};
+	if (validate_and_load_args(&ps, ptrr) != SUCCESS)
+		return (1);
+	main_core_rooter (&ps, elements);
 	free_stack (&ps.stack_a);
 	return (0);
 }
@@ -71,20 +83,23 @@ int	main(int arc, char **arv)
 	ret = 0;
 	if (arc < 2)
 		return (0);
-	if (arc == 2)
+	else if (arc == 2)
 	{
 		ptrr = split_spht(arv[1]);
 		if (!ptrr)
-			return (-1);
-		ret = main_core(ptrr);
-		free_ptrr(ptrr);
+			ret = 1;
+		else
+		{
+			ret = pushswap(ptrr, ft_ptrrlen(ptrr));
+			free_ptrr(ptrr);
+		}
 	}
 	else
 	{
 		ptrr = &arv[1];
-		ret = main_core(ptrr);
+		ret = pushswap(ptrr, arc - 1);
 	}
-	if (ret == -1)
+	if (ret == 1)
 		write(STDOUT_FILENO, "Error\n", 6);
 	return (ret);
 }

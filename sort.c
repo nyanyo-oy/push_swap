@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_helpers2.c                                      :+:      :+:    :+:   */
+/*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:07:16 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/22 16:10:08 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 15:28:44 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ static void	ranking_nodes_relay_ranks(t_pushswap *ps,
 		}
 		tmp = tmp->next;
 	}
-	free (rank);
 }
 
 int	ranking_nodes(t_pushswap *ps)
@@ -116,5 +115,6 @@ int	ranking_nodes(t_pushswap *ps)
 		tmp = tmp->next;
 	}
 	ranking_nodes_relay_ranks(ps, rank, elements);
+	free (rank);
 	return (0);
 }

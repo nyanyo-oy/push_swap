@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:59:56 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/12 09:35:18 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 15:20:59 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,6 @@ long long	count_elements(t_pushswap *ps)
 		elements++;
 	}
 	return (elements);
-}
-
-bool	has_duplicate(t_pushswap *ps, long long num)
-{
-	struct t_node	*target;
-
-	if (!ps->stack_a.head)
-		return (false);
-	target = ps->stack_a.head;
-	while (target != NULL)
-	{
-		if (target->number == num)
-			return (true);
-		target = target->next;
-	}
-	return (false);
 }
 
 long long	ft_atoll(const char *nptr)

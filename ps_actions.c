@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_actions1.c                                      :+:      :+:    :+:   */
+/*   ps_actions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:28:18 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/22 15:28:19 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:32:44 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ long long	add_to_tail(t_stack *stack, int num)
 
 	current = (struct t_node *)malloc(sizeof(struct t_node));
 	if (!current)
-		return (-1);
+		return (1);
 	current->number = num;
 	current->next = NULL;
 	if (stack->tail == NULL)

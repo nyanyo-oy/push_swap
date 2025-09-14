@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:16:07 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/09 16:13:14 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:26:01 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void			ft_putnbr_fd(int n, int fd);
 
 char			**split_spht(char *str);
 void			free_ptrr(char **ptrr);
+size_t			ft_ptrrlen(char **ptrr);
 
 #endif

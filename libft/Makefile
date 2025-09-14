@@ -6,7 +6,7 @@
 #    By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 18:15:26 by kensei            #+#    #+#              #
-#    Updated: 2025/08/14 02:18:15 by kenakamu         ###   ########.fr        #
+#    Updated: 2025/09/12 13:26:41 by kenakamu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ SRCS	= 	ft_isalnum.c \
 						ft_putendl_fd.c	\
 						ft_putnbr_fd.c	\
 						additional/split_spht.c \
-						free_ptrr.c
+						free_ptrr.c		\
+						ft_ptrrlen.c
 
 
 
@@ -69,10 +70,10 @@ all:			$(NAME)
 $(NAME): $(OBJS) $(PRINTF_LIB)
 	cp $(PRINTF_LIB) $(NAME)
 	ar rcs $(NAME) $(OBJS)
-	
+
 $(PRINTF_LIB):
 	$(MAKE) -C $(PRINTF_DIR)
-	
+
 $(OBJDIR)/%.o: %.c $(HEADERS)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -80,10 +81,10 @@ $(OBJDIR)/%.o: %.c $(HEADERS)
 clean:
 	$(RM) $(OBJDIR)
 	$(MAKE) -C $(PRINTF_DIR) clean
-	
+
 fclean: clean
 	$(RM) $(NAME)
-	$(MAKE) -C $(PRINTF_DIR) fclean 
+	$(MAKE) -C $(PRINTF_DIR) fclean
 
 re: fclean all
 

@@ -7,10 +7,10 @@ SRCS	=	main.c					\
 			ac_swap.c				\
 			ps_actions.c			\
 			ps_helpers.c 			\
-			ps_sorts.c				\
 			ps_validators.c			\
-			under_five_elements.c	\
-			
+			sort_small_cases.c		\
+			sort.c
+
 OBJDIR	=	OBJS
 OBJS	=	$(SRCS:%.c=$(OBJDIR)/%.o)
 
@@ -28,20 +28,19 @@ $(NAME): $(OBJS) $(LIBFT_LIB)
 
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
-	
+
 $(OBJDIR)/%.o: %.c push_swap.h
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I. -c $< -o $@
-	
+
 clean:
 	$(RM) $(OBJDIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
-	
+
 fclean: clean
 	$(RM) $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean	
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
 .PHONY: all clean fclean re
-	

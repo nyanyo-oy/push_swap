@@ -6,14 +6,20 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 11:47:53 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/08/22 16:10:59 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:53:08 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "libft/libft.h"
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include "libft/libft.h"
+
+# define SUCCESS 0
+# define FAILURE 1
 
 typedef struct t_node
 {
@@ -65,8 +71,8 @@ int				swap(t_stack *stack);
 
 long long		count_elements(t_pushswap *ps);
 bool			is_already_sorted(t_pushswap *ps);
-bool			has_duplicate(t_pushswap *ps, long long num);
-bool			is_int_num(const char *nptr);
+bool			is_value_duplicated(t_pushswap *ps, long long num);
+bool			is_integer(const char *nptr);
 long long		ft_atoll(const char *nptr);
 
 void			radix_lsd(t_pushswap *ps);
@@ -79,4 +85,6 @@ void			elements_are_four(t_pushswap *ps);
 void			elements_are_five(t_pushswap *ps);
 
 void			free_stack(t_stack *stack);
-// void			debug_print_stack_a(t_pushswap *ps);
+int				pushswap(char **ptrr, int elements);
+
+#endif
