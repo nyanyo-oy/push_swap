@@ -99,26 +99,28 @@ int	main(int arc, char **arv)
 		ptrr = &arv[1];
 		ret = pushswap(ptrr, arc - 1);
 	}
+	
 	if (ret == 1)
 		write(STDOUT_FILENO, "Error\n", 6);
 	return (ret);
 }
 
-//void	debug_print_stack_a(t_pushswap *ps)
-//{
-//	struct t_node	*c = ps->stack_a.head;
+// #include <stdio.h>
+// void	debug_print_stack_a(t_pushswap *ps)
+// {
+// 	struct t_node	*c = ps->stack_a.head;
 
-//	while (c != NULL)
-//	{
-//		printf("%lld ",c->rank);
-//		c = c->next;
-//	}
-//	printf("\n");
-//	c = ps->stack_a.head;
-//	while (c != NULL)
-//	{
-//		printf("%lld ",c->number);
-//		c = c->next;
-//	}
-//	printf("\n");
-//}
+// 	while (c != NULL)
+// 	{
+// 		printf("%lld ",c->rank);
+// 		c = c->next;
+// 	}
+// 	printf("\n");
+// 	c = ps->stack_a.head;
+// 	while (c != NULL)
+// 	{
+// 		printf("%lld ",c->number);
+// 		c = c->next;
+// 	}
+// 	printf("\n");
+// }
