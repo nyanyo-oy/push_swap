@@ -99,7 +99,6 @@ int	main(int arc, char **arv)
 		ptrr = &arv[1];
 		ret = pushswap(ptrr, arc - 1);
 	}
-	
 	if (ret == 1)
 		write(STDOUT_FILENO, "Error\n", 6);
 	return (ret);
