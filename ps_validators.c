@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 20:46:40 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/12 15:20:37 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/28 20:39:05 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ static bool	parse_and_check_overflow(const char *nptr, int start, int sign)
 {
 	long	result;
 	int		i;
+	bool	has_digit;
 
 	result = 0;
 	i = start;
+	has_digit = false;
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
+		has_digit = true;
 		result = (result * 10) + (nptr[i] - '0');
 		if (sign == 1 && result > INT_MAX)
 			return (false);
@@ -40,7 +43,7 @@ static bool	parse_and_check_overflow(const char *nptr, int start, int sign)
 			return (false);
 		i++;
 	}
-	if (nptr[i] != '\0')
+	if (nptr[i] != '\0' || !has_digit)
 		return (false);
 	return (true);
 }
