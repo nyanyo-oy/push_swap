@@ -67,3 +67,12 @@ void	free_stack(t_stack *stack)
 	stack->head = NULL;
 	stack->tail = NULL;
 }
+
+void	end_program(int exit_status, t_pushswap *ps)
+{
+	free_stack(&ps->stack_a);
+	free_stack(&ps->stack_b);
+	if (exit_status == EXIT_FAILURE)
+		write(STDOUT_FILENO, "Error\n", 6);
+	exit(exit_status);
+}

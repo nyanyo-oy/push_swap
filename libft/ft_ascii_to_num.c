@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ac_push.c                                          :+:      :+:    :+:   */
+/*   ft_ascii_to_num.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 12:13:17 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/10 17:00:23 by kenakamu         ###   ########.fr       */
+/*   Created: 2025/09/28 00:44:10 by kenakamu          #+#    #+#             */
+/*   Updated: 2025/09/28 00:44:11 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	pa(t_pushswap *ps)
+int	ft_ascii_to_num(char c)
 {
-	if (stack_head_to_head(&ps->stack_a, &ps->stack_b) != SUCCESS)
-		end_program(EXIT_FAILURE, ps);
-	write (1, "pa\n", 3);
-}
-
-void	pb(t_pushswap *ps)
-{
-	if (stack_head_to_head(&ps->stack_b, &ps->stack_a) != SUCCESS)
-		end_program(EXIT_FAILURE, ps);
-	write(1, "pb\n", 3);
+	return (c - 48);
 }

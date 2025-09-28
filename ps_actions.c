@@ -41,10 +41,10 @@ int	stack_head_to_head(t_stack *dst, t_stack *src)
 	struct t_node	*old_node;
 
 	if (!src || !src->head)
-		return (-1);
+		return (1);
 	new = malloc(sizeof(struct t_node));
 	if (!new)
-		return (-1);
+		return (1);
 	new->number = src->head->number;
 	new->rank = src->head->rank;
 	old_node = src->head;
@@ -69,7 +69,7 @@ int	move_head_to_tail(t_stack *stack)
 	struct t_node	*tmp;
 
 	if (!stack || !stack->head || !stack->head->next)
-		return (-1);
+		return (1);
 	tmp = stack->head;
 	stack->head = stack->head->next;
 	stack->head->prev = NULL;
@@ -85,7 +85,7 @@ int	move_tail_to_head(t_stack *stack)
 	struct t_node	*tmp;
 
 	if (!stack || !stack->head || !stack->head->next)
-		return (-1);
+		return (1);
 	tmp = stack->tail;
 	stack->tail = stack->tail->prev;
 	stack->tail->next = NULL;
@@ -102,7 +102,7 @@ int	swap(t_stack *stack)
 	long long	tmp_rank;
 
 	if (!stack || !stack->head || !stack->head->next)
-		return (-1);
+		return (1);
 	tmp_num = stack->head->number;
 	stack->head->number = stack->head->next->number;
 	stack->head->next->number = tmp_num;

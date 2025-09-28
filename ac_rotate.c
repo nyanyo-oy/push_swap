@@ -14,7 +14,8 @@
 
 void	do_ra(t_pushswap *ps)
 {
-	move_head_to_tail(&ps->stack_a);
+	if (move_head_to_tail(&ps->stack_a) != SUCCESS)
+		end_program(EXIT_FAILURE, ps);
 }
 
 void	ra(t_pushswap *ps)
@@ -25,7 +26,8 @@ void	ra(t_pushswap *ps)
 
 void	do_rb(t_pushswap *ps)
 {
-	move_head_to_tail(&ps->stack_b);
+	if (move_head_to_tail(&ps->stack_b) != SUCCESS)
+		end_program(EXIT_FAILURE, ps);
 }
 
 void	rb(t_pushswap *ps)
@@ -36,7 +38,9 @@ void	rb(t_pushswap *ps)
 
 void	rr(t_pushswap *ps)
 {
-	do_ra(ps);
-	do_rb(ps);
+	if (move_head_to_tail(&ps->stack_a) != SUCCESS)
+		end_program(EXIT_FAILURE, ps);
+	if (move_head_to_tail(&ps->stack_b) != SUCCESS)
+		end_program(EXIT_FAILURE, ps);
 	write(1, "rr\n", 3);
 }

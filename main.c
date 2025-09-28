@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 11:36:14 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/14 20:40:26 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/28 17:53:56 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ static void	main_core_rooter(t_pushswap *ps, int elements)
 		elements_are_five(ps);
 	else
 	{
-		ranking_nodes(ps);
+		if (ranking_nodes(ps) != SUCCESS)
+			end_program(EXIT_FAILURE, ps);
 		radix_lsd(ps);
 	}
 }
 
-static int	validate_and_load_args(t_pushswap *ps, char **ptrr)
+static void	validate_and_load_args(t_pushswap *ps, char **ptrr)
 {
 	int			i;
 	long long	num;
@@ -43,23 +44,19 @@ static int	validate_and_load_args(t_pushswap *ps, char **ptrr)
 	{
 		if (is_integer(ptrr[i]) == false)
 		{
-			free_stack (&ps->stack_a);
-			return (1);
+			end_program(EXIT_FAILURE, ps);
 		}
 		num = ft_atoll(ptrr[i]);
 		if (is_value_duplicated(ps, num) != SUCCESS)
 		{
-			free_stack (&ps->stack_a);
-			return (1);
+			end_program(EXIT_FAILURE, ps);
 		}
 		if (add_to_tail(&ps->stack_a, num) != SUCCESS)
 		{
-			free_stack (&ps->stack_a);
-			return (1);
+			end_program(EXIT_FAILURE, ps);
 		}
 		i++;
 	}
-	return (0);
 }
 
 int	pushswap(char **ptrr, int elements)
@@ -68,8 +65,7 @@ int	pushswap(char **ptrr, int elements)
 
 	ps.stack_a = (t_stack){NULL, NULL};
 	ps.stack_b = (t_stack){NULL, NULL};
-	if (validate_and_load_args(&ps, ptrr) != SUCCESS)
-		return (1);
+	validate_and_load_args(&ps, ptrr);
 	main_core_rooter (&ps, elements);
 	free_stack (&ps.stack_a);
 	return (0);
@@ -78,30 +74,26 @@ int	pushswap(char **ptrr, int elements)
 int	main(int arc, char **arv)
 {
 	char	**ptrr;
-	int		ret;
 
-	ret = 0;
 	if (arc < 2)
-		return (0);
+		return (EXIT_FAILURE);
 	else if (arc == 2)
 	{
 		ptrr = split_spht(arv[1]);
 		if (!ptrr)
-			ret = 1;
+			return (EXIT_FAILURE);
 		else
 		{
-			ret = pushswap(ptrr, ft_ptrrlen(ptrr));
+			pushswap(ptrr, ft_ptrrlen(ptrr));
 			free_ptrr(ptrr);
 		}
 	}
 	else
 	{
 		ptrr = &arv[1];
-		ret = pushswap(ptrr, arc - 1);
+		pushswap(ptrr, arc - 1);
 	}
-	if (ret == 1)
-		write(STDOUT_FILENO, "Error\n", 6);
-	return (ret);
+	return (EXIT_SUCCESS);
 }
 
 // #include <stdio.h>
@@ -109,12 +101,6 @@ int	main(int arc, char **arv)
 // {
 // 	struct t_node	*c = ps->stack_a.head;
 
-// 	while (c != NULL)
-// 	{
-// 		printf("%lld ",c->rank);
-// 		c = c->next;
-// 	}
-// 	printf("\n");
 // 	c = ps->stack_a.head;
 // 	while (c != NULL)
 // 	{

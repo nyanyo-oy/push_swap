@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ac_push.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 12:13:17 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/10 17:00:23 by kenakamu         ###   ########.fr       */
+/*   Created: 2025/09/26 15:51:09 by kenakamu          #+#    #+#             */
+/*   Updated: 2025/09/26 15:51:10 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	pa(t_pushswap *ps)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	if (stack_head_to_head(&ps->stack_a, &ps->stack_b) != SUCCESS)
-		end_program(EXIT_FAILURE, ps);
-	write (1, "pa\n", 3);
+	size_t	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i])
+		i++;
+	return (((unsigned char)s1[i]) - ((unsigned char)s2[i]));
 }
 
-void	pb(t_pushswap *ps)
-{
-	if (stack_head_to_head(&ps->stack_b, &ps->stack_a) != SUCCESS)
-		end_program(EXIT_FAILURE, ps);
-	write(1, "pb\n", 3);
-}
+// #include <stdio.h>
+// int	main()
+// {
+// 	char s1[]="abc";
+// 	char s2[]="abcd";
+
+// 	printf("%d",strcmp(s1, s2));
+// }

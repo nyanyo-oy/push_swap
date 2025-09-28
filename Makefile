@@ -18,18 +18,18 @@ LIBFT_DIR	=	./libft
 LIBFT_LIB	=	$(LIBFT_DIR)/libft.a
 
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -I$(LIBFT_DIR)
 RM		=	rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_LIB)
 
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(OBJDIR)/%.o: %.c push_swap.h
+$(OBJDIR)/%.o: %.c push_swap.h $(LIBFT_LIB)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I. -c $< -o $@
 

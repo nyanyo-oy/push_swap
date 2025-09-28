@@ -86,5 +86,6 @@ void			elements_are_five(t_pushswap *ps);
 
 void			free_stack(t_stack *stack);
 int				pushswap(char **ptrr, int elements);
+void			end_program(int exit_status, t_pushswap *ps);
 
 #endif

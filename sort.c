@@ -106,7 +106,7 @@ int	ranking_nodes(t_pushswap *ps)
 	elements = count_elements(ps);
 	rank = (long long *)malloc(sizeof(long long) * elements);
 	if (!rank)
-		return (-1);
+		return (1);
 	tmp = ps->stack_a.head;
 	k = 0;
 	while (tmp != NULL)

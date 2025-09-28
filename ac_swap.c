@@ -14,7 +14,8 @@
 
 void	do_sa(t_pushswap *ps)
 {
-	swap(&ps->stack_a);
+	if (swap(&ps->stack_a) != SUCCESS)
+		end_program(EXIT_FAILURE, ps);
 }
 
 void	sa(t_pushswap *ps)
@@ -25,7 +26,8 @@ void	sa(t_pushswap *ps)
 
 void	do_sb(t_pushswap *ps)
 {
-	swap(&ps->stack_b);
+	if (swap(&ps->stack_b) != SUCCESS)
+		end_program(EXIT_FAILURE, ps);
 }
 
 void	sb(t_pushswap *ps)
@@ -36,7 +38,9 @@ void	sb(t_pushswap *ps)
 
 void	ss(t_pushswap *ps)
 {
-	do_sa(ps);
-	do_sb(ps);
+	if (swap(&ps->stack_a) != SUCCESS)
+		end_program(EXIT_FAILURE, ps);
+	if (swap(&ps->stack_b) != SUCCESS)
+		end_program(EXIT_FAILURE, ps);
 	write(1, "ss\n", 3);
 }
